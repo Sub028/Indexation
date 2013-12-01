@@ -3,7 +3,7 @@
 
 #include "wavHeader.h"
 #include "wavData.h"
-#include "utility.h"
+#include "Utility/utility.h"
 
 //TODO : NIOURF !!! Utiliser le fichier de conf !!!
 #define NB_BARRE 30	//Nombre de barre
