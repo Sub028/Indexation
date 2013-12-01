@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	WavFile wavFile;
-	openWavFile(&wavFile, argv[1], 0);
+	openWavFile(&wavFile, argv[1]);
 
 	writeWavFile(&wavFile);
 	writeWavHeaderFile(&wavFile);

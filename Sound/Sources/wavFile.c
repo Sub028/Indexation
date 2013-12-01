@@ -1,3 +1,24 @@
+//======================================================================//
+// Projet Informatique: Indexation de Fichiers
+//======================================================================//
+// UPSSITECH L3 SMI 2013-2014
+// Auteur: ERDELYI Jean-François
+// Date de création: 01/12/13
+//======================================================================//
+// Fichier C: wavFile.c ou Fichier H: wavFile.h
+//======================================================================//
+// Module AUDIO :
+// - Permet de manipuler des fichiers wav
+//======================================================================//
+
+/**
+ * \file wavFile.c
+ * \author Jean-François Erdelyi
+ * \brief Permet de manipuler des fichiers wav.
+ * \version 1
+ * \date 01 decembre 2013.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,33 +27,36 @@
 #include "wavFile.h"
 #include "Utility/dynamiqueIntegerTab.h"
 
-int openWavFile(WavFile *wavFile, char *fileName, int dataOnly) {
+/**
+ * \fn int openWavFile(WavFile *wavFile, char *fileName, int dataOnly)
+ * \brief Ouvre un fichier wav et le met en mémoire
+ *
+ * \param wavFile Fichier wav en mémoire.
+ * \param fileName Nom du fichier wav.
+ */
+void openWavFile(WavFile *wavFile, char *fileName) {
 	char nameBuffer[100];
 
 	wavFile->fileName = (char*)malloc(sizeof(*fileName));
 	strcpy(wavFile->fileName, fileName);
 	wavFile->file = fopen(fileName, "rb");
-	if(dataOnly) {
-		fseek(wavFile->file, sizeof(WavHeader), SEEK_SET);
-	} else {
-		initWavHeader(&wavFile->wavHeader);
-		readHeader(&wavFile->wavHeader, wavFile->file);
-	}
-	wavFile->dataOnly = dataOnly;
+
+	initWavHeader(&wavFile->wavHeader);
+	readHeader(&wavFile->wavHeader, wavFile->file);
 	initWavData(&wavFile->wavData);
 	readWavData(&wavFile->wavData, wavFile->file);
 }
 
+/**
+ * \fn int writeWavFile(WavFile *wavFile)
+ * \brief Ecrit un fichier wav en binaire.
+ *
+ * \param wavFile Fichier wav en mémoire.
+ * \return -1 si une erreur lors de l'ouverture sinon 0.
+ */
 int writeWavFile(WavFile *wavFile) {
 	char buffer[100] = {0};
 	FILE *fileResult;
-	
-	if(wavFile->dataOnly) {
-		fileResult = fopen("Results/logs.txt", "a");
-		fprintf(fileResult, "Attention ! on ne peut pas écrire un fichier en 'Data Only' \n");
-		fclose(fileResult);
-		return(0);
-	}
 
 	createPath(wavFile->fileName, "Results/", "_out.wav", buffer);
 	fileResult = fopen(buffer, "wb");
@@ -46,16 +70,16 @@ int writeWavFile(WavFile *wavFile) {
 	return(0);
 }
 
+/**
+ * \fn int writeWavHeaderFile(WavFile *wavFile) 
+ * \brief Ecrit l'header dans un fichier texte.
+ *
+ * \param wavFile Fichier wav en mémoire.
+ * \return -1 si une erreur lors de l'ouverture sinon 0.
+ */
 int writeWavHeaderFile(WavFile *wavFile) {
 	char buffer[100] = {0};
 	FILE *fileResult;
-	
-	if(wavFile->dataOnly) {
-		fileResult = fopen("Results/logs.txt", "a");
-		fprintf(fileResult, "Attention ! on ne peut pas écrire l'entête en 'Data Only' \n");
-		fclose(fileResult);
-		return(0);
-	}
 
 	createPath(wavFile->fileName, "Results/", "_header.txt", buffer);
 	fileResult = fopen(buffer, "w");
@@ -68,6 +92,13 @@ int writeWavHeaderFile(WavFile *wavFile) {
 	return(0);
 }
 
+/**
+ * \fn int writeWavDataFile(WavFile *wavFile)
+ * \brief Ecrit les data dans un fichier texte.
+ *
+ * \param wavFile Fichier wav en mémoire.
+ * \return -1 si une erreur lors de l'ouverture sinon 0.
+ */
 int writeWavDataFile(WavFile *wavFile) {
 	char buffer[100] = {0};
 	FILE *fileResult;
@@ -83,6 +114,13 @@ int writeWavDataFile(WavFile *wavFile) {
 	return(0);
 }
 
+/**
+ * \fn int writeWavNormalizedDataFile(WavFile *wavFile)
+ * \brief Ecrit les data normalisé dans un fichier texte.
+ *
+ * \param wavFile Fichier wav en mémoire.
+ * \return -1 si une erreur lors de l'ouverture sinon 0.
+ */
 int writeWavNormalizedDataFile(WavFile *wavFile) {
 	char buffer[100] = {0};
 	FILE *fileResult;
@@ -98,7 +136,13 @@ int writeWavNormalizedDataFile(WavFile *wavFile) {
 	return(0);
 }
 
-//BOURRIN METHODE
+/**
+ * \fn int writeDescriptor(WavFile *wavFile)
+ * \brief Ecrit le descipteur de donnée
+ *
+ * \param wavFile Fichier wav en mémoire.
+ * \return -1 si une erreur lors de l'ouverture sinon 0.
+ */
 int writeDescriptor(WavFile *wavFile) {
 	char buffer[100] = {0};
 	CelWavData *currentCel = wavFile->wavData.begin;
@@ -157,6 +201,12 @@ int writeDescriptor(WavFile *wavFile) {
 	return(0);
 }
 
+/**
+ * \fn void closeWavFile(WavFile *wavFile)
+ * \brief Ferme le fichier en mémoire libere les allocations
+ *
+ * \param wavFile Fichier wav en mémoire.
+ */
 void closeWavFile(WavFile *wavFile) {
 	freeDataWav(&wavFile->wavData);
 	free(wavFile->fileName);

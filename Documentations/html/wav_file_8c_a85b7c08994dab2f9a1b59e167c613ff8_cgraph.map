@@ -1,0 +1,6 @@
+<map id="writeWavHeaderFile" name="writeWavHeaderFile">
+<area shape="rect" id="node2" href="$utility_8c.html#a04352fab648256bdb7979af9dacb059c" title="Crée un nouveau chemin pour un fichier." alt="" coords="199,5,284,32"/>
+<area shape="rect" id="node5" href="$wav_header_8c.html#a5912b92efe4da104f1259b2e802176be" title="Ecrit l&#39;entête dans un fichier text." alt="" coords="195,56,287,83"/>
+<area shape="rect" id="node3" href="$utility_8c.html#a2cae9b6882060efaa04a8c8a0c546fad" title="Retourne la cellule correspondant a la clef." alt="" coords="337,5,434,32"/>
+<area shape="rect" id="node4" href="$utility_8c.html#adfa289c669a42e7afe10b7614a154f6f" title="Retourne a partir d&#39;ou le nom de fichier commence." alt="" coords="483,5,618,32"/>
+</map>
