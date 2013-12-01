@@ -1,6 +1,0 @@
-<map id="openWavFile" name="openWavFile">
-<area shape="rect" id="node2" href="$wav_header_8c.html#add571f98b0d1a60007f42caf91eaf335" title="Initialise l&#39;entête." alt="" coords="153,5,261,32"/>
-<area shape="rect" id="node3" href="$wav_header_8c.html#a4257e71d6abd2c7d1f7149d9680cb199" title="Permet de stocker l&#39;entête d&#39;un fichier wav en mémoire." alt="" coords="162,56,251,83"/>
-<area shape="rect" id="node4" href="$wav_data_8c.html#aee2804f7701a06e3bad4a640c2843f57" title="Initialise les données." alt="" coords="159,107,254,133"/>
-<area shape="rect" id="node5" href="$wav_data_8c.html#aa6d46d167ff44c7ab0d6edb23bf3a8ae" title="Permet de lire les données et de les stocker en mémoire." alt="" coords="155,157,258,184"/>
-</map>

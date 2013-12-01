@@ -1,5 +1,0 @@
-<map id="WavFile" name="WavFile">
-<area shape="rect" id="node2" href="$struct_wav_header.html" title="Contient les champ d&#39;une entête d&#39;un fichier wav." alt="" coords="5,109,96,136"/>
-<area shape="rect" id="node3" href="$struct_wav_data.html" title="Données d&#39;un fichier." alt="" coords="120,109,197,136"/>
-<area shape="rect" id="node4" href="$struct_cel_wav_data.html" title="Cellule de donnée audio." alt="" coords="110,5,207,32"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="writeWavNormalizedDataFile" name="writeWavNormalizedDataFile">
-<area shape="rect" id="node2" href="$utility_8c.html#a04352fab648256bdb7979af9dacb059c" title="Crée un nouveau chemin pour un fichier." alt="" coords="275,5,360,32"/>
-<area shape="rect" id="node5" href="$wav_data_8c.html#adee9b490993b1ac6b28e57c100a6ae59" title="writeNormalizedData" alt="" coords="245,56,389,83"/>
-<area shape="rect" id="node3" href="$utility_8c.html#a2cae9b6882060efaa04a8c8a0c546fad" title="Retourne la cellule correspondant a la clef." alt="" coords="438,5,535,32"/>
-<area shape="rect" id="node4" href="$utility_8c.html#adfa289c669a42e7afe10b7614a154f6f" title="Retourne a partir d&#39;ou le nom de fichier commence." alt="" coords="585,5,719,32"/>
-</map>
