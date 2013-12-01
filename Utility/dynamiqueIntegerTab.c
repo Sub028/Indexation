@@ -56,7 +56,7 @@ void initTab(DynamiqueIntegerTab *tab, int nbValues) {
 void addValue(DynamiqueIntegerTab *tab, int key) {
 	IntegerTabCell *currentCell = getIntegerTabCell(tab, key);
 	if(currentCell == NULL) {
-		changeValueAt(tab, key, 0);
+		changeValueAt(tab, key, 1);
 	} else {
 		currentCell->value++;
 	}
