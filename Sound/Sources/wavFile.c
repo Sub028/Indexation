@@ -4,7 +4,7 @@
 #include <math.h>
 #include <time.h>
 #include "wavFile.h"
-#include "histogram.h"
+#include "Utility/dynamiqueIntegerTab.h"
 
 int openWavFile(WavFile *wavFile, char *fileName, int dataOnly) {
 	char nameBuffer[100];
@@ -102,7 +102,7 @@ int writeWavNormalizedDataFile(WavFile *wavFile) {
 int writeDescriptor(WavFile *wavFile) {
 	char buffer[100] = {0};
 	CelWavData *currentCel = wavFile->wavData.begin;
-	Histogram *histo;
+	DynamiqueIntegerTab *dynTab;
 	FILE *fileResult;
 	int nbWindows = 0;
 	int i, j, k;
@@ -127,16 +127,16 @@ int writeDescriptor(WavFile *wavFile) {
 	}
 	
 	fprintf(fileResult, "%s\t%d\t%d\t%d\n", id, NB_BARRE, NB_ECH, nbWindows);
-	histo = (Histogram*)calloc(nbWindows, sizeof(Histogram));
+	dynTab = (DynamiqueIntegerTab*)calloc(nbWindows, sizeof(DynamiqueIntegerTab));
 	for(i = 0; i < nbWindows; i++) {
-		initHistogram(&histo[i], NB_BARRE);
+		initTab(&dynTab[i], NB_BARRE);
 	}
 	for(i = 0; i < nbWindows; i++) {
 		for(j = 0; j < NB_ECH; j++) {
 			for(k = -NB_BARRE / 2; k < NB_BARRE / 2; k++) {
 				normalizedSample = currentCel->sample / pow(2, 15);
 				if(normalizedSample >= bar * k && normalizedSample < bar * (k + 1)) {
-					addValue(&histo[i], k + NB_BARRE / 2);
+					addValue(&dynTab[i], k + NB_BARRE / 2);
 				}
 			}
 			if(currentCel->nextCell == NULL) {
@@ -150,8 +150,8 @@ int writeDescriptor(WavFile *wavFile) {
 		if(i != 0) {
 			fprintf(fileResult, "\n");
 		}
-		writeHistogram(&histo[i], fileResult);
-		freeHistogram(&histo[i]);
+		writeTab(&dynTab[i], fileResult);
+		freeIntegerTab(&dynTab[i]);
 	}
 	fclose(fileResult);
 	return(0);
