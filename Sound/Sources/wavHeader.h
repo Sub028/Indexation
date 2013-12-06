@@ -40,7 +40,7 @@ typedef struct WavHeader {
 
 void initWavHeader(WavHeader *wavHeader);
 void writeHeader(WavHeader *wavHeader, FILE *file);
-int writeWavHeader(WavHeader *wavHeader, FILE *file);
-int readHeader(WavHeader *wavHeader, FILE *file);
+void writeWavHeader(WavHeader *wavHeader, FILE *file);
+void readHeader(WavHeader *wavHeader, FILE *file);
 
 #endif /*WAV_HEADER_H*/

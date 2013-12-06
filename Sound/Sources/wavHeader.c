@@ -63,24 +63,23 @@ void writeHeader(WavHeader *wavHeader, FILE *file) {
 }
 
 /**
- * \fn int writeWavHeader(WavHeader *wavHeader, FILE *file)
+ * \fn void writeWavHeader(WavHeader *wavHeader, FILE *file)
  * \brief Ecrit l'entête dans un fichier binaire wav.
  *
  * \param wavHeader L'entête.
  * \param file Le fichier de sortie.
- * \return La valeur du fwrite
  */
-int writeWavHeader(WavHeader *wavHeader, FILE *file) {
-	return(fwrite(wavHeader, sizeof(WavHeader), 1, file));
+void writeWavHeader(WavHeader *wavHeader, FILE *file) {
+	fwrite(wavHeader, sizeof(WavHeader), 1, file);
 }
 
 /**
- * \fn int readHeader(WavHeader *wavHeader, FILE *file)
+ * \fn void readHeader(WavHeader *wavHeader, FILE *file)
  * \brief Permet de stocker l'entête d'un fichier wav en mémoire
  *
  * \param wavHeader L'entête.
  * \param file Le fichier de sortie.
  */
-int readHeader(WavHeader *wavHeader, FILE *file) {
-	return(fread(wavHeader, sizeof(WavHeader), 1, file));
+void readHeader(WavHeader *wavHeader, FILE *file) {
+	fread(wavHeader, sizeof(WavHeader), 1, file);
 }

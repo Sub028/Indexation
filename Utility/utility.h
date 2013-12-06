@@ -12,7 +12,22 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-void extractName(char fullName[100], char *nameOnly);
-void createPath(char fullName[100], char prefix[100], char suffix[100], char *fileName);
+#define BUFFER_SIZE 100
+
+int indexOfNameBegin(char *fullName);
+void getStringUntil(char *input, char *output, char c);
+void splitHeaderJustSize(char *header, int *nbBars, int *nbWindows);
+void splitHeader(char *header, char *id, int *nbBars, int *nbWindows, char *date);
+void splitDate(char *dateIn, char *dateOut);
+int supprDescriptor(char *id);
+int supprDescriptorHeader(FILE *base, char *line);
+void extractName(char *fullName, char *nameOnly);
+void extractExtension(char *fullName, char *extension);
+void createPath(char *fullName, char *prefix, char *suffix, char *fileName);
+int getIdInDescriptorBase(FILE *base, char *id, char *fileName);
+void getDescriptor(FILE *base, char *id);
+int getValueOf(char *key, int *value);
+void checkDescriptorBase(FILE *base, FILE *log);
+int getIfFileHasModified(char *id, char *fileName, FILE *log);
 
 #endif /*UTILITY_H*/

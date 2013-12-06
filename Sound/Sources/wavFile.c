@@ -24,6 +24,8 @@
 #include <string.h>
 #include <math.h>
 #include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "wavFile.h"
 #include "Utility/dynamiqueIntegerTab.h"
 
@@ -35,7 +37,7 @@
  * \param fileName Nom du fichier wav.
  */
 void openWavFile(WavFile *wavFile, char *fileName) {
-	char nameBuffer[100];
+	char nameBuffer[BUFFER_SIZE];
 
 	wavFile->fileName = (char*)malloc(sizeof(*fileName));
 	strcpy(wavFile->fileName, fileName);
@@ -55,7 +57,7 @@ void openWavFile(WavFile *wavFile, char *fileName) {
  * \return -1 si une erreur lors de l'ouverture sinon 0.
  */
 int writeWavFile(WavFile *wavFile) {
-	char buffer[100] = {0};
+	char buffer[BUFFER_SIZE] = {0};
 	FILE *fileResult;
 
 	createPath(wavFile->fileName, "Results/", "_out.wav", buffer);
@@ -78,7 +80,7 @@ int writeWavFile(WavFile *wavFile) {
  * \return -1 si une erreur lors de l'ouverture sinon 0.
  */
 int writeWavHeaderFile(WavFile *wavFile) {
-	char buffer[100] = {0};
+	char buffer[BUFFER_SIZE] = {0};
 	FILE *fileResult;
 
 	createPath(wavFile->fileName, "Results/", "_header.txt", buffer);
@@ -100,7 +102,7 @@ int writeWavHeaderFile(WavFile *wavFile) {
  * \return -1 si une erreur lors de l'ouverture sinon 0.
  */
 int writeWavDataFile(WavFile *wavFile) {
-	char buffer[100] = {0};
+	char buffer[BUFFER_SIZE] = {0};
 	FILE *fileResult;
 
 	createPath(wavFile->fileName, "Results/", "_data.txt", buffer);
@@ -122,7 +124,7 @@ int writeWavDataFile(WavFile *wavFile) {
  * \return -1 si une erreur lors de l'ouverture sinon 0.
  */
 int writeWavNormalizedDataFile(WavFile *wavFile) {
-	char buffer[100] = {0};
+	char buffer[BUFFER_SIZE] = {0};
 	FILE *fileResult;
 
 	createPath(wavFile->fileName, "Results/", "_normalized_data.txt", buffer);
@@ -137,50 +139,55 @@ int writeWavNormalizedDataFile(WavFile *wavFile) {
 }
 
 /**
- * \fn int writeDescriptor(WavFile *wavFile)
+ * \fn int writeDescriptor(WavFile *wavFile, FILE *desciptorBase, FILE *log)
  * \brief Ecrit le descipteur de donnée
  *
  * \param wavFile Fichier wav en mémoire.
+ * \param desciptorBase Bases des descripteur audio.
  * \return -1 si une erreur lors de l'ouverture sinon 0.
  */
-int writeDescriptor(WavFile *wavFile) {
-	char buffer[100] = {0};
-	CelWavData *currentCel = wavFile->wavData.begin;
-	DynamiqueIntegerTab *dynTab;
-	FILE *fileResult;
+int writeDescriptor(WavFile *wavFile, FILE *desciptorBase, FILE *log) {
+	struct stat st;
+	char buffer[BUFFER_SIZE] = {0};
+	char id[BUFFER_SIZE] = {0};
 	int nbWindows = 0;
 	int i, j, k;
-	float bar = 2.0 / NB_BARRE;
+	int nbBar, nbSample;
+	float bar;
 	float normalizedSample = 0;
-	int rest;
-	char id[100] = {0};
+	CelWavData *currentCel = wavFile->wavData.begin;
+	DynamiqueIntegerTab *dynTab;
+	FILE *soundBase = fopen("Bases/base_descripteur_audio.base", "a");
 
 	srand(time(NULL));
-	createPath(wavFile->fileName, "Results/", "_descriptor.txt", buffer);
-	fileResult = fopen(buffer, "w");
-	if(fileResult == NULL) {
+	if(stat(wavFile->fileName, &st) == -1) {
+		fprintf(log, "STAT ERROR ");
+		return(-1);
+	}
+	if(getValueOf("NB_BAR", &nbBar) == -1 || getValueOf("NB_SAMPLE", &nbSample) == -1) {
+		fprintf(log, "CONFIG ERROR ");
 		return(-1);
 	}
 
-	extractName(wavFile->fileName, buffer);
-	sprintf(id, "%d", rand());
-	strcat(id, buffer);
-	nbWindows = wavFile->wavData.size / NB_ECH;
-	if(wavFile->wavData.size % NB_ECH != 0) {
+	bar = 2.0 / nbBar;
+	sprintf(id, "ID%d", rand());
+	strcat(id, wavFile->fileName);
+	nbWindows = wavFile->wavData.size / nbSample;
+	if(wavFile->wavData.size % nbSample != 0) {
 		nbWindows++;
 	}
-	
-	fprintf(fileResult, "%s\t%d\t%d\t%d\n", id, NB_BARRE, NB_ECH, nbWindows);
+
+	fprintf(soundBase, "%s\t%d\t%d\t%s", id, nbBar, nbWindows, ctime(&st.st_mtime));
 	dynTab = (DynamiqueIntegerTab*)calloc(nbWindows, sizeof(DynamiqueIntegerTab));
 	for(i = 0; i < nbWindows; i++) {
-		initTab(&dynTab[i], NB_BARRE);
+		initTab(&dynTab[i], nbBar);
 	}
 	for(i = 0; i < nbWindows; i++) {
-		for(j = 0; j < NB_ECH; j++) {
-			for(k = -NB_BARRE / 2; k < NB_BARRE / 2; k++) {
+		for(j = 0; j < nbSample; j++) {
+			for(k = -nbBar / 2; k < nbBar / 2; k++) {
 				normalizedSample = currentCel->sample / pow(2, 15);
 				if(normalizedSample >= bar * k && normalizedSample < bar * (k + 1)) {
-					addValue(&dynTab[i], k + NB_BARRE / 2);
+					addValue(&dynTab[i], k + nbBar / 2);
 				}
 			}
 			if(currentCel->nextCell == NULL) {
@@ -192,12 +199,14 @@ int writeDescriptor(WavFile *wavFile) {
 	}
 	for(i = 0; i < nbWindows; i++) {
 		if(i != 0) {
-			fprintf(fileResult, "\n");
+			fprintf(soundBase, "\n");
 		}
-		writeTab(&dynTab[i], fileResult);
+		writeTab(&dynTab[i], soundBase);
 		freeIntegerTab(&dynTab[i]);
 	}
-	fclose(fileResult);
+	fprintf(soundBase, "\n");
+	fprintf(desciptorBase, "%s\t%s\n", wavFile->fileName, id);
+	fclose(soundBase);
 	return(0);
 }
 

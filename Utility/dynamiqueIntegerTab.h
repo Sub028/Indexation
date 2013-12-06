@@ -40,8 +40,10 @@ typedef struct DynamiqueIntegerTab {
 
 void initTab(DynamiqueIntegerTab *tab, int nbValues);
 void changeValueAt(DynamiqueIntegerTab *tab, int key, int value);
+int isVoid(DynamiqueIntegerTab *tab);
 void addValue(DynamiqueIntegerTab *tab, int key);
 IntegerTabCell* getIntegerTabCell(DynamiqueIntegerTab *tab, int key);
+void writeTab(DynamiqueIntegerTab *tab, FILE *file);
 void freeIntegerTab(DynamiqueIntegerTab *tab);
 
 #endif /*DYNAMIQUE_INTEGRE_TAB_H*/

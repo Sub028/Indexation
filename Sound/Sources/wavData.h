@@ -37,7 +37,8 @@ typedef struct WavData {
 void initWavData(WavData *wavData);
 void readWavData(WavData *wavData, FILE *file);
 void writeWavData(WavData *wavData, FILE *file);
-void freeDataWav(WavData *wavData);
 void writeData(WavData *wavData, FILE *file);
+void writeNormalizedData(WavData *wavData, FILE *file);
+void freeDataWav(WavData *wavData);
 
 #endif /*WAVE_DATA_H*/

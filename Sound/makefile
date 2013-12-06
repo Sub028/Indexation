@@ -15,7 +15,7 @@ wavFile.o: Sources/wavFile.c Sources/wavFile.h
 dynamiqueIntegerTab.o: Sources/Utility/dynamiqueIntegerTab.c Sources/Utility//dynamiqueIntegerTab.h
 	gcc -c Sources/Utility/dynamiqueIntegerTab.c
 	
-utility.o: Sources/Utility/utility.c  Sources/Utility/utility.h
+utility.o: Sources/Utility/utility.c Sources/Utility/utility.h
 	gcc -c  Sources/Utility/utility.c
 
 main.o: Sources/main.c
