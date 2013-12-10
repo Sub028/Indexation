@@ -17,7 +17,9 @@ int main(int argc, char *argv[]) {
 	FILE *descriptorBase;
 	FILE *log;
 	int ret;
+	time_t aclock;
 
+	time(&aclock);
 	folder = opendir("Data/");
 	descriptorBase = fopen("Bases/liste_base_audio.base", "a+");
 	log = fopen("log.log", "a");
@@ -25,6 +27,7 @@ int main(int argc, char *argv[]) {
 		perror("Probleme lors de l'ouverture du dossier ou de fichier ");
 		return(EXIT_FAILURE);
 	}
+	fprintf(log, "%s", ctime(&aclock));
 	checkDescriptorBase(descriptorBase, log);
 	while((currentElement = readdir(folder))) {
 		extractExtension(currentElement->d_name, extension);
