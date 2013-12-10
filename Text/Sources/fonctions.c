@@ -1,6 +1,7 @@
-#include "Histogram.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "histogram.h"
 
 //fonction servant a recuperer tous les mots sans les balises  -> GROOOS BUUUG !!! n'affiche pas les mots mais un gros espace !!!!
 void get_words(FILE *file) { 

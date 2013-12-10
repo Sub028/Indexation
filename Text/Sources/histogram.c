@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Histogram.h"
+#include "histogram.h"
 
 void init_histogram(Histogram *h) {
 	h->begin = NULL;

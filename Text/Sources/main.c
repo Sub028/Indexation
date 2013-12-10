@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "indexation.h"
+#include "histogram.h"
 
 int main(int argc, char *argv[]) {
 	//tableau qui va contenir une phrase
