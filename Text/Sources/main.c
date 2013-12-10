@@ -11,12 +11,12 @@ int main(int argc, char *argv[]) {
 		printf("Nom du fichier requis\n");
 	return (EXIT_FAILURE);
 
-	}		
+	}
 	FILE *fic = fopen(argv[1], "r");
 	
 	if (fic == NULL) {
 		printf("Erreur lors de l'ouverture du fichier\n");
-		return (EXIT_FAILURE);		
+		return (EXIT_FAILURE);
 	}
 
 	//l'indexation
@@ -26,7 +26,6 @@ int main(int argc, char *argv[]) {
 	//display_descriptor();
 	//pour liberer memoire du decripteur
 	//free_descriptor();
-	
 	//on ferme le fichier
 	fclose(fic);
 	return(EXIT_SUCCESS);

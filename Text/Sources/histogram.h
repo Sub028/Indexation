@@ -1,10 +1,6 @@
 #ifndef HISTOGRAM_H
 #define HISTOGRAM_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #define MAX_BUFFER_SIZE 100
 
 //structure d'une cellule

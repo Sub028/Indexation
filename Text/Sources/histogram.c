@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Histogram.h"
 
 void init_histogram(Histogram *h) {
@@ -8,7 +11,7 @@ void init_histogram(Histogram *h) {
 void addValue(char *key, Histogram *h) {
 	Cel *currentCell;
 	Cel *newc;
-	
+
 	//l'histogramme est vide
 	if(isVoid(h)) {
 		newc = (Cel*)malloc(sizeof(Cel));
