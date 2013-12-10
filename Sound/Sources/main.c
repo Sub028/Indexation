@@ -39,8 +39,8 @@ int main(int argc, char *argv[]) {
 
 	desciptorBase = fopen("Bases/liste_base_audio.base", "a+");
 	if(desciptorBase == NULL) {
-		perror("Impossible d'ouvrir le fichier ");
-		return(EXIT_FAILURE);
+		system("mkdir Bases");
+		desciptorBase = fopen("Bases/liste_base_audio.base", "a+");
 	}
 	if((log = fopen("log.log", "a")) == NULL) {
 		perror("Impossible d'ouvrir le fichier ");

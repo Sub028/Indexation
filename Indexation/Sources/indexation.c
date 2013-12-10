@@ -22,9 +22,13 @@ int main(int argc, char *argv[]) {
 	time(&aclock);
 	folder = opendir("Data/");
 	descriptorBase = fopen("Bases/liste_base_audio.base", "a+");
+	if(descriptorBase == NULL) {
+		system("mkdir Bases");
+		descriptorBase = fopen("Bases/liste_base_audio.base", "a+");
+	}
 	log = fopen("log.log", "a");
-	if(folder == NULL || descriptorBase == NULL || log == NULL) {
-		perror("Probleme lors de l'ouverture du dossier ou de fichier ");
+	if(folder == NULL) {
+		perror("Probleme lors de l'ouverture du dossier ");
 		return(EXIT_FAILURE);
 	}
 	fprintf(log, "%s", ctime(&aclock));

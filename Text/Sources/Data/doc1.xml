@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<annuaire>
+    <personne>
+        <nom>HEUTE</nom>
+        <prenom>Thomas</prenom>
+        <email>webmaster@xmlfacile.com</email>
+    </personne>
+    <personne>
+        <nom>CANTAT</nom>
+        <prenom>Bertrand</prenom>
+        <email>noir@desir.fr</email>
+    </personne>
+</annuaire>

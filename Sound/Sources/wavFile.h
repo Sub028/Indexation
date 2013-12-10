@@ -14,13 +14,6 @@
 #include "Utility/utility.h"
 
 /**
- * TODO NIOURF !!! Utiliser le fichier de conf !!!
- */
-#define NB_BARRE 30	//Nombre de barre
-#define NB_ECH 1024	//Nombre d'échantillon (de points par intervalle)
-			//Nombre de fenetre NBFEN = SON / NB_ECH;
-
-/**
  * \struct WavFile
  * \brief Représentation d'un fichier wav en mémoire
  *

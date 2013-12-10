@@ -27,7 +27,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "wavFile.h"
-#include "Utility/dynamiqueIntegerTab.h"
+#include "Utility/dynamicIntegerTab.h"
 
 /**
  * \fn int openWavFile(WavFile *wavFile, char *fileName, int dataOnly)
@@ -156,7 +156,7 @@ int writeDescriptor(WavFile *wavFile, FILE *desciptorBase, FILE *log) {
 	float bar;
 	float normalizedSample = 0;
 	CelWavData *currentCel = wavFile->wavData.begin;
-	DynamiqueIntegerTab *dynTab;
+	DynamicIntegerTab *dynTab;
 	FILE *soundBase = fopen("Bases/base_descripteur_audio.base", "a");
 
 	srand(time(NULL));
@@ -178,7 +178,7 @@ int writeDescriptor(WavFile *wavFile, FILE *desciptorBase, FILE *log) {
 	}
 
 	fprintf(soundBase, "%s\t%d\t%d\t%s", id, nbBar, nbWindows, ctime(&st.st_mtime));
-	dynTab = (DynamiqueIntegerTab*)calloc(nbWindows, sizeof(DynamiqueIntegerTab));
+	dynTab = (DynamicIntegerTab*)calloc(nbWindows, sizeof(DynamicIntegerTab));
 	for(i = 0; i < nbWindows; i++) {
 		initTab(&dynTab[i], nbBar);
 	}
