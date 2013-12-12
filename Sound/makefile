@@ -19,3 +19,6 @@ utility.o: Sources/Utility/utility.c Sources/Utility/utility.h
 
 main.o: Sources/main.c
 	gcc -c Sources/main.c
+	
+clear: 
+	rm *.o

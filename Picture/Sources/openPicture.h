@@ -24,6 +24,6 @@
 
 //======================================================================//
 
-int openPict(FILE* picture, FILE* log, FILE* config, FILE* descriptor, char* filename);
+int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename);
 
 //======================================================================//

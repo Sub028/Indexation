@@ -14,10 +14,11 @@
 //======================================================================//
 
 #include "openPicture.h"
+#include "Utility/utility.h"
 
 //======================================================================//
 
-int openPict(FILE* picture, FILE* log, FILE* config, FILE* descriptor, char* filename) {
+int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 	PictureRGB pictRGB;
 	PictureBW pictBW;
 	Histogram hist;
@@ -26,21 +27,22 @@ int openPict(FILE* picture, FILE* log, FILE* config, FILE* descriptor, char* fil
 	int i, j, k, sizeXTemp, sizeYTemp, nbComponent, exponent, quantifyingLevel;
 	int flagPictureRGB = -1; 	// 1 if picture RGB
 					// 0 if picture B&W
-	char command[100];
 	char id[100];
-	char chemin[100];
-	
-	// Descripteur par fichier
-	FILE* descriptorUnit;
+
+	// Base des descripteur d'images
+	//TODO : Il ne faut pas oublier d'inscrire le descripteur 
+	//	dans la bases des descripteur !
+	FILE* pictureBase = fopen("Bases/base_descripteur_image.base", "a+");
 	srand(time(NULL));
 	sprintf(id, "ID%d", rand());
-	sprintf(chemin, "Bases/Descripteurs/%s.des", id);
-	descriptorUnit = fopen(chemin, "w");
 	
 	// Allocation de la mémoire pour stocker l'image
 	fscanf(picture, "%d %d %d", &sizeYTemp, &sizeXTemp, &nbComponent);
 	
-	fscanf(config, "%s\t%d", command, &quant.nbBit);	// Chaine à récupérer "NB_SIGNIFICANT_BIT_FOR_QUANTIFICATION"
+	if(getValueOf("NB_SIGNIFICANT_BIT_FOR_QUANTIFICATION", &quant.nbBit) == -1) {
+		fprintf(log, "CONFIG ERROR ");
+		return(-1);
+	}
 	
 	if(nbComponent == 3) {
 		int RedValue, GreenValue, BlueValue;
@@ -109,10 +111,10 @@ int openPict(FILE* picture, FILE* log, FILE* config, FILE* descriptor, char* fil
 		// Ecriture histogramme
 		strcat(id, pictRGB.filename);
 		time(&clock);
-		fprintf(descriptorUnit, "%s\t%d\t%d\t%d\t%d\t%s", id, pictRGB.sizeY, pictRGB.sizeX , pictRGB.component, quant.nbBit, ctime(&clock));
+		fprintf(descriptorBase, "%s\t%d\t%d\t%d\t%d\t%s", id, pictRGB.sizeY, pictRGB.sizeX , pictRGB.component, quant.nbBit, ctime(&clock));
 		
 		for(i = 0; i < pow(2, (quant.nbBit*3)); i++) {
-			fprintf(descriptorUnit, "%d\t%d\n", hist.matrixHisto[0][i], hist.matrixHisto[1][i]);
+			fprintf(descriptorBase, "%d\t%d\n", hist.matrixHisto[0][i], hist.matrixHisto[1][i]);
 			fflush(stdout);
 		}
 		
@@ -168,10 +170,10 @@ int openPict(FILE* picture, FILE* log, FILE* config, FILE* descriptor, char* fil
 		// Ecriture histogramme
 		strcat(id, pictBW.filename);
 		time(&clock);
-		fprintf(descriptorUnit, "%s\t%d\t%d\t%d\t%d\t%s", id, pictBW.sizeY, pictBW.sizeX , pictBW.component, quant.nbBit, ctime(&clock));
+		fprintf(pictureBase, "%s\t%d\t%d\t%d\t%d\t%s", id, pictBW.sizeY, pictBW.sizeX , pictBW.component, quant.nbBit, ctime(&clock));
 		
 		for(i = 0; i < pow(2, quant.nbBit); i++) {
-			fprintf(descriptorUnit, "%d\t%d\n", hist.matrixHisto[0][i], hist.matrixHisto[1][i]);
+			fprintf(pictureBase, "%d\t%d\n", hist.matrixHisto[0][i], hist.matrixHisto[1][i]);
 			fflush(stdout);
 		}
 		

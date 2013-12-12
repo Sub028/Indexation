@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include "wavFile.h"
 #include "Utility/dynamicIntegerTab.h"
+#include "Utility/utility.h"
 
 /**
  * \fn int openWavFile(WavFile *wavFile, char *fileName, int dataOnly)
