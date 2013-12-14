@@ -20,3 +20,6 @@ Objects/dynamicIntegerTab.o: Sources/Sound/Utility/dynamicIntegerTab.c Sources/S
 	
 Objects/utility.o: Sources/Sound/Utility/utility.c Sources/Sound/Utility/utility.h
 	gcc -c Sources/Utility/utility.c
+
+clear: 
+	rm *.o
