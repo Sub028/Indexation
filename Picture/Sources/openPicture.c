@@ -54,27 +54,8 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 		// Création d'un histogramme RGB temporaire
 		initHistogram(&hist, pow(2, (quant.nbBit*3)), log);
 		
-		// STOCKAGE TEMPORAIRE DES COMPOSANTES
-		// 1ere matrice: matrice rouge
-		for(i = 0; i < pictRGB.sizeY; i++) {
-			for(j = 0; j < pictRGB.sizeX; j++) {
-				fscanf(picture, "%d", &pictRGB.matrixRed[i][j]);
-			}
-		}
-		
-		// 2ième matrice: matrice verte
-		for(i = 0; i < pictRGB.sizeY; i++) {
-			for(j = 0; j < pictRGB.sizeX; j++) {
-				fscanf(picture, "%d", &pictRGB.matrixGreen[i][j]);
-			}
-		}
-		
-		// 3ième matrice: matrice bleue
-		for(i = 0; i < pictRGB.sizeY; i++) {
-			for(j = 0; j < pictRGB.sizeX; j++) {
-				fscanf(picture, "%d", &pictRGB.matrixBlue[i][j]);
-			}
-		}
+		// Stockage temporaire de l'image
+		storagePictureRGB(&pictRGB, picture);
 		
 		// Traitement sur l'image
 		for(i = 0; i < pictRGB.sizeY; i++) {
@@ -127,13 +108,8 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 		// Création d'un histogramme BW temporaire
 		initHistogram(&hist, pow(2, quant.nbBit), log);
 		
-		// STOCKAGE TEMPORAIRE DE LA COMPOSANTE GRISE
-		// Matrice grey
-		for(i = 0; i < pictBW.sizeY; i++) {
-			for(j = 0; j < pictBW.sizeX; j++) {
-				fscanf(picture, "%d", &pictBW.matrixGrey[i][j]);
-			}
-		}
+		// Stockage temporaire de l'image
+		storagePictureBW(&pictBW, picture);
 		
 		// Traitement sur l'image
 		for(i = 0; i < pictBW.sizeY; i++) {

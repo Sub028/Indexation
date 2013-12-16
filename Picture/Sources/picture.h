@@ -50,5 +50,7 @@ int initPictureRGB(PictureRGB* pictRGB, int sizeY, int sizeX, char* filename, FI
 int initPictureBW(PictureBW* pictBW, int sizeY, int sizeX, char* filename, FILE* log);
 int removePictureRGB(PictureRGB* pictRGB, FILE* log);
 int removePictureBW(PictureBW* pictBW, FILE* log);
+int storagePictureRGB(PictureRGB* pictRGB, FILE* picture);
+int storagePictureBW(PictureBW* pictBW, FILE* picture);
 
 //======================================================================//

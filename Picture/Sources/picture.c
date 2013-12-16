@@ -52,3 +52,43 @@ int removePictureBW(PictureBW* pictBW, FILE* log) {
 }
 
 //======================================================================//
+
+int storagePictureRGB(PictureRGB* pictRGB, FILE* picture) {
+	// STOCKAGE TEMPORAIRE DES COMPOSANTES
+	int i, j;
+	// 1ere matrice: matrice rouge
+	for(i = 0; i < pictRGB->sizeY; i++) {
+		for(j = 0; j < pictRGB->sizeX; j++) {
+			fscanf(picture, "%d", &pictRGB->matrixRed[i][j]);
+		}
+	}
+	
+	// 2ième matrice: matrice verte
+	for(i = 0; i < pictRGB->sizeY; i++) {
+		for(j = 0; j < pictRGB->sizeX; j++) {
+			fscanf(picture, "%d", &pictRGB->matrixGreen[i][j]);
+		}
+	}
+	
+	// 3ième matrice: matrice bleue
+	for(i = 0; i < pictRGB->sizeY; i++) {
+		for(j = 0; j < pictRGB->sizeX; j++) {
+			fscanf(picture, "%d", &pictRGB->matrixBlue[i][j]);
+		}
+	}
+}
+
+//======================================================================//
+
+int storagePictureBW(PictureBW* pictBW, FILE* picture) {
+	// STOCKAGE TEMPORAIRE DE LA COMPOSANTE GRISE
+	int i, j;
+	// Matrice grey
+	for(i = 0; i < pictBW->sizeY; i++) {
+		for(j = 0; j < pictBW->sizeX; j++) {
+			fscanf(picture, "%d", &pictBW->matrixGrey[i][j]);
+		}
+	}
+}
+
+//======================================================================//
