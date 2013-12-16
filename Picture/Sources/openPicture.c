@@ -16,10 +16,31 @@
 //	- Fermeture de l'image ouverte
 //======================================================================//
 
+/**
+ * \file openPicture.c
+ * \author Aurélien Veillard
+ * \brief Permet d'ouvrir une image, de la stocker temporairement,
+ * 	puis d'effectuer une quantification qui sera stockée dans un histogramme.
+ * \version 1.0
+ * \date 30 Novembre 2013
+ */
+
+//======================================================================//
+
 #include "openPicture.h"
 #include "Utility/utility.h"
 
 //======================================================================//
+
+/**
+ * \fn int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename)
+ * \brief Appel des fonctions de traitement et de stockage
+ *
+ * \param picture L'image ouverte est en cours de traitement.
+ * \param log Fichier de log.
+ * \param descriptorBase Fichier descripteur.
+ * \param filename Le nom de l'image à ouvrir.
+ */
 
 int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 	PictureRGB pictRGB;

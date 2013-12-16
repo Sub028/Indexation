@@ -12,6 +12,16 @@
 //	- Stockage dans un tableau de la taille nbBit*nbComponent
 //======================================================================//
 
+/**
+ * \file quantification.h
+ * \author Aurélien Veillard
+ * \brief Permet de quantifier une ou trois matrices.
+ * \version 1.0
+ * \date 06 Décembre 2013
+ */
+
+//======================================================================//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,6 +31,11 @@
 #include "histogram.h"
 
 //======================================================================//
+
+/**
+ * \struct Quantification
+ * \brief Structure permettant de stocker temporairement le résultat de la quantification.
+ */
 
 typedef struct {
 	int* quantifyingNumber;

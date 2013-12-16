@@ -13,6 +13,16 @@
 //	- Ecriture d'un histogramme
 //======================================================================//
 
+/**
+ * \file histogram.h
+ * \author Aurélien Veillard
+ * \brief Représentation d'un histogramme répresentatif de l'image traitée via une structure de données.
+ * \version 1.0
+ * \date 30 Novembre 2013
+ */
+
+//======================================================================//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,6 +30,12 @@
 #include "matrix.h"
 
 //======================================================================//
+
+/**
+ * \struct Histogram
+ * \brief Structure représentative d'un histogramme générique.
+ *	Permet de stocker l'histogramme de l'image traitée (RGB ou BW) et le nombre de valeur de l'histogramme.
+ */
 
 #ifndef HISTOGRAM
 #define HISTOGRAM

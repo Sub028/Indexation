@@ -28,10 +28,28 @@
 //
 //======================================================================//
 
+/**
+ * \file matrix.c
+ * \author Aurélien Veillard
+ * \brief Permet de créer des matrices dynamiques.
+ * \version 1.0
+ * \date 30 Novembre 2013
+ */
+
+//======================================================================//
+
 #include "matrix.h"
 
 //======================================================================//
-// Allocation dynamique de matrice x*y
+
+/**
+ * \fn int** allocMatrix2D(int y, int x, FILE* log)
+ * \brief Allocation d'une matrice dynamique.
+ * \param y Taille y de l'image (en hauteur).
+ * \param x Taille x de l'image (en largeur).
+ * \param log Fichier de log.
+ * \return matrix : la matrice dynamique récemment créée.
+ */
 
 int** allocMatrix2D(int y, int x, FILE* log) {
 	int i = 0;
@@ -53,6 +71,14 @@ int** allocMatrix2D(int y, int x, FILE* log) {
 }
 
 //======================================================================//
+
+/**
+ * \fn int freeMatrix2D(int** matrix2D, int y, FILE* log)
+ * \brief Suppression d'une matrice dynamique.
+ * \param matrix2D Matrice dynamique à supprimer.
+ * \param y Taille y de l'image (en hauteur).
+ * \param log Fichier de log.
+ */
 
 int freeMatrix2D(int** matrix2D, int y, FILE* log) {
 	int i;

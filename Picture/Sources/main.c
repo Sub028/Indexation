@@ -11,10 +11,29 @@
 // - 
 //======================================================================//
 
+/**
+ * \file main.c
+ * \author Aurélien Veillard
+ * \brief Permet de tester le module Image.
+ * \version 1.0
+ * \date 18 Novembre 2013.
+ */
+
+//======================================================================//
+
 #include "openPicture.h"
 #include <time.h>
 
 //======================================================================//
+
+/**
+ * \fn int main(int argc, char *argv[])
+ * \brief Test la partie Image
+ *
+ * \param argc Nombre d'arguments passés
+ * \param argv Attendu: le chemin d'accès du fichier à traiter
+ * \return EXIT_SUCCESS ou EXIT_FAILURE
+ */
 
 int main(int argc, char* argv[]) {	
 	FILE* picture = NULL;
@@ -23,7 +42,8 @@ int main(int argc, char* argv[]) {
 	FILE* log = NULL;
 	time_t clock;
 	
-	int debug = 1;
+	int error, debug = 1;
+	
 	if(argc < 2) {
 		fprintf(stderr, "\033[31m");
 		fprintf(stderr, "> Bad utilisation: need filename\n");
@@ -44,7 +64,7 @@ int main(int argc, char* argv[]) {
 	if(picture != NULL) {
 		fprintf(log, "> Openning success: %s\n", argv[1]);
 		fflush(stdout);
-		openPict(picture, log, descriptorBase, argv[1]);
+		error = openPict(picture, log, descriptorBase, argv[1]);
 	} else if(picture == NULL){
 		fprintf(log, "> ERROR: can't open picture\n");
 		fflush(stdout);
@@ -54,12 +74,22 @@ int main(int argc, char* argv[]) {
 	}
 	
 	fclose(picture);
+	
 	fprintf(log, "> Indexation of '%s' done!\n", argv[1]);
+	
+// 	if(error == 0) {
+// 		fprintf(log, "> Indexation of '%s' done!\n", argv[1]);
+// 	} else {
+// 		fprintf(log, "> ERROR: indexation failed\n");
+// 		return(EXIT_FAILURE);
+// 	}
 	
 	if(debug) {
 		fprintf(log, "> Closing: %s\n", argv[1]);
 		fclose(log);
 	}
+	
+	return(EXIT_SUCCESS);
 }
 
 //======================================================================//

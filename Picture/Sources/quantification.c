@@ -21,23 +21,42 @@
 //	Pour les BW: idem sauf pour une seule composante
 //======================================================================//
 
+/**
+ * \file quantification.c
+ * \author Aurélien Veillard
+ * \brief Permet de quantifier une ou trois matrices.
+ * \version 1.0
+ * \date 06 Décembre 2013
+ */
+
+//======================================================================//
+
 #include "quantification.h"
 
 //======================================================================//
 
-int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueValue) {
+/**
+ * \fn int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueValue)
+ * \brief Calcul de la quantification d'un pixel.
+ * \param quant Structure quant contenant le résultat.
+ * \param redValue Composante rouge.
+ * \param greenValue Composante verte.
+ * \param blueValue Composante bleue.
+ */
+
+int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueValue) {
 	int powerOfTwo, exponent, positionQuantWord;
 	
-	if(RedValue <= 255 && GreenValue <= 255 && BlueValue <= 255) {
+	if(redValue <= 255 && greenValue <= 255 && blueValue <= 255) {
 		quant->quantifyingNumber = (int*)malloc(((quant->nbBit)*3)*sizeof(int));
 	
 		// Composante Rouge
 		positionQuantWord = 0;
 		for(exponent = 7; exponent >= (8-quant->nbBit); exponent--) {	// exponent = 7 pour un int de 8 le MSB vaut 2^7
 			powerOfTwo = pow(2, exponent);	// Deux à la puissance exponent
-			if((RedValue%powerOfTwo) <= (RedValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
+			if((redValue%powerOfTwo) <= (redValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
 				quant->quantifyingNumber[positionQuantWord] = 1;
-				RedValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
+				redValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
 			} else {
 				quant->quantifyingNumber[positionQuantWord] = 0;
 			}
@@ -46,9 +65,9 @@ int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueVal
 	
 		for(exponent = 7; exponent >= (8-quant->nbBit); exponent--) {	// exponent = 7 pour un int de 8 le MSB vaut 2^7
 			powerOfTwo = pow(2, exponent);	// Deux à la puissance exponent
-			if((GreenValue%powerOfTwo) <= (GreenValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
+			if((greenValue%powerOfTwo) <= (greenValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
 				quant->quantifyingNumber[positionQuantWord] = 1;
-				GreenValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
+				greenValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
 			} else {
 				quant->quantifyingNumber[positionQuantWord] = 0;
 			}
@@ -57,16 +76,16 @@ int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueVal
 	
 		for(exponent = 7; exponent >= (8-quant->nbBit); exponent--) {	// exponent = 7 pour un int de 8 le MSB vaut 2^7
 			powerOfTwo = pow(2, exponent);	// Deux à la puissance exponent
-			if((BlueValue%powerOfTwo) <= (BlueValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
+			if((blueValue%powerOfTwo) <= (blueValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
 				quant->quantifyingNumber[positionQuantWord] = 1;
-				BlueValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
+				blueValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
 			} else {
 				quant->quantifyingNumber[positionQuantWord] = 0;
 			}
 			positionQuantWord++;
 		}
 	} else {
-		printf("> ERROR: RGB level higher than 255: value = R: %d / G: %d / B: %d\n", RedValue, GreenValue, BlueValue);
+		printf("> ERROR: RGB level higher than 255: value = R: %d / G: %d / B: %d\n", redValue, greenValue, blueValue);
 		fflush(stdout);
 		return -1;
 	}
@@ -74,26 +93,33 @@ int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueVal
 
 //======================================================================//
 
-int quantifyBW(Quantification* quant, int GreyValue) {
+/**
+ * \fn int quantifyBW(Quantification* quant, int greyValue)
+ * \brief Calcul de la quantification d'un pixel.
+ * \param quant Structure quant contenant le résultat.
+ * \param greyValue Composante grise.
+ */
+
+int quantifyBW(Quantification* quant, int greyValue) {
 	int powerOfTwo, exponent, positionQuantWord;
 	
-	if(GreyValue <= 255) {
+	if(greyValue <= 255) {
 		quant->quantifyingNumber = (int*)malloc((quant->nbBit)*sizeof(int));
 	
 		// Composante Rouge
 		positionQuantWord = 0;
 		for(exponent = 7; exponent >= (8-quant->nbBit); exponent--) {	// exponent = 7 pour un int de 8 le MSB vaut 2^7
 			powerOfTwo = pow(2, exponent);	// Deux à la puissance exponent
-			if((GreyValue%powerOfTwo) <= (GreyValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
+			if((greyValue%powerOfTwo) <= (greyValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
 				quant->quantifyingNumber[positionQuantWord] = 1;
-				GreyValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
+				greyValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
 			} else {
 				quant->quantifyingNumber[positionQuantWord] = 0;
 			}
 			positionQuantWord++;
 		}
 	} else {
-		printf("> ERROR: Grey level higher than 255: value = %d\n", GreyValue);
+		printf("> ERROR: Grey level higher than 255: value = %d\n", greyValue);
 		fflush(stdout);
 		return -1;
 	}
@@ -101,18 +127,26 @@ int quantifyBW(Quantification* quant, int GreyValue) {
 
 //======================================================================//
 
+/**
+ * \fn int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant, Histogram* hist)
+ * \brief Calcul de la quantification d'une image.
+ * \param pictRGB Permet d'utiliser les matrices de stockage temporaires de l'image couleurs.
+ * \param quant Structure contenant le résultat temporaire de la quantification d'un pixel.
+ * \param hist Structure contenant l'histogramme.
+ */
+
 int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant, Histogram* hist) {
 	int i, j, k, exponent, quantifyingLevel;
-	int RedValue, BlueValue, GreenValue;
+	int redValue, blueValue, greenValue;
 	
 	// Traitement sur l'image
 	for(i = 0; i < pictRGB->sizeY; i++) {
 		for(j = 0; j < pictRGB->sizeX; j++) {
 			// Quantification
-			RedValue = pictRGB->matrixRed[i][j];
-			GreenValue = pictRGB->matrixGreen[i][j];
-			BlueValue = pictRGB->matrixBlue[i][j];
-			quantifyRGB(&(*quant), RedValue, GreenValue, BlueValue);
+			redValue = pictRGB->matrixRed[i][j];
+			greenValue = pictRGB->matrixGreen[i][j];
+			blueValue = pictRGB->matrixBlue[i][j];
+			quantifyRGB(&(*quant), redValue, greenValue, blueValue);
 			
 			// Transformation du résultat de quantification
 			exponent = ((quant->nbBit)*(pictRGB->component)) - 1;
@@ -131,16 +165,24 @@ int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant,
 
 //======================================================================//
 
+/**
+ * \fn int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Histogram* hist)
+ * \brief Calcul de la quantification d'une image.
+ * \param pictBW Permet d'utiliser la matrice de stockage temporaire de l'image noir et blanc.
+ * \param quant Structure contenant le résultat temporaire de la quantification d'un pixel.
+ * \param hist Structure contenant l'histogramme.
+ */
+
 int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Histogram* hist) {
 	int i, j, k, exponent, quantifyingLevel;
-	int GreyValue;
+	int greyValue;
 	
 	// Traitement sur l'image
 	for(i = 0; i < pictBW->sizeY; i++) {
 		for(j = 0; j < pictBW->sizeX; j++) {
 			// Quantification
-			GreyValue = pictBW->matrixGrey[i][j];
-			quantifyBW(&(*quant), GreyValue);
+			greyValue = pictBW->matrixGrey[i][j];
+			quantifyBW(&(*quant), greyValue);
 			
 			// Transformation du résultat de quantification
 			exponent = quant->nbBit - 1;

@@ -16,6 +16,17 @@
 //	- Fermeture de l'image ouverte
 //======================================================================//
 
+/**
+ * \file openPicture.h
+ * \author Aurélien Veillard
+ * \brief Permet d'ouvrir une image, de la stocker temporairement,
+ * 	puis d'effectuer une quantification qui sera stockée dans un histogramme.
+ * \version 1.0
+ * \date 30 Novembre 2013
+ */
+
+//======================================================================//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
