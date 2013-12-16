@@ -8,9 +8,8 @@
 // Fichier C: matrix.c
 //======================================================================//
 // Fonctions:
-// - Lecture du contenu des fichiers images (au format .txt)
-// - Stockage des matrices des trois composantes par alloc dynamique
-// - Libération de la mémoire allouée
+// 	- Création d'une matrice dynamique
+// 	- Libération de la mémoire allouée à la matrice
 //======================================================================//
 // REPRESENTATION MATRICE 2D:
 //

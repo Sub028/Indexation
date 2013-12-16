@@ -8,9 +8,12 @@
 // Fichier H: openPicture.h
 //======================================================================//
 // Fonctions:
-// - Ouverture d'une image (au format .txt)
-// - Appel de la fonction de lecture et stockage temp des images
-// - Fermeture de l'image ouverte
+// 	- Ouverture d'une image (au format .txt)
+// 	- Lecture
+//	- Stockage temporaire d'une image
+//	- Quantification
+//	- Ecriture de l'histogramme dans un fichier descripteur
+//	- Fermeture de l'image ouverte
 //======================================================================//
 
 #include <stdio.h>

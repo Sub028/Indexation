@@ -8,7 +8,9 @@
 // Fichier C: histogram.c
 //======================================================================//
 // Fonctions:
-// - 
+// 	- Création d'un histogramme
+//	- Destruction d'un histogramme
+//	- Ecriture d'un histogramme
 //======================================================================//
 
 #include "histogram.h"

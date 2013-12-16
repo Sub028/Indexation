@@ -8,7 +8,9 @@
 // Fichier C: picture.c
 //======================================================================//
 // Fonctions:
-// - Structure picture
+//	- Initialisation de la structure image couleur et blanc/noir
+//	- Destruction de la structure temporaire
+//	- Stockage temporaire de l'image
 //======================================================================//
 
 #include "picture.h"

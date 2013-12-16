@@ -8,7 +8,8 @@
 // Fichier H: quantification.h
 //======================================================================//
 // Fonctions:
-// - 
+// 	- Récupère les n premiers bits des int des composantes RGB ou BW
+//	- Stockage dans un tableau de la taille nbBit*nbComponent
 //======================================================================//
 
 #include <stdio.h>
