@@ -100,3 +100,61 @@ int quantifyBW(Quantification* quant, int GreyValue) {
 }	
 
 //======================================================================//
+
+int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant, Histogram* hist) {
+	int i, j, k, exponent, quantifyingLevel;
+	int RedValue, BlueValue, GreenValue;
+	
+	// Traitement sur l'image
+	for(i = 0; i < pictRGB->sizeY; i++) {
+		for(j = 0; j < pictRGB->sizeX; j++) {
+			// Quantification
+			RedValue = pictRGB->matrixRed[i][j];
+			GreenValue = pictRGB->matrixGreen[i][j];
+			BlueValue = pictRGB->matrixBlue[i][j];
+			quantifyRGB(&(*quant), RedValue, GreenValue, BlueValue);
+			
+			// Transformation du résultat de quantification
+			exponent = ((quant->nbBit)*(pictRGB->component)) - 1;
+			quantifyingLevel = 0;
+			
+			for(k = 0; k < ((quant->nbBit)*(pictRGB->component)); k++) {	// Parcours du tableau de la gauche vers la droite (du poids fort au poids faible)
+				if(quant->quantifyingNumber[k] == 1) {	// Si le bit est a 1 alors on ajoute "son poids" au résultat
+					quantifyingLevel += pow(2, exponent);	// Ajout du poids du bit à un 1
+				}
+				exponent--;	// Diminution du rang de l'exposant
+			}
+			hist->matrixHisto[1][quantifyingLevel]++;	// Incrémentation de la case de l'histogramme correspondant (car classé de 0 à n-1) à la valeur calculée
+		}
+	}
+}
+
+//======================================================================//
+
+int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Histogram* hist) {
+	int i, j, k, exponent, quantifyingLevel;
+	int GreyValue;
+	
+	// Traitement sur l'image
+	for(i = 0; i < pictBW->sizeY; i++) {
+		for(j = 0; j < pictBW->sizeX; j++) {
+			// Quantification
+			GreyValue = pictBW->matrixGrey[i][j];
+			quantifyBW(&(*quant), GreyValue);
+			
+			// Transformation du résultat de quantification
+			exponent = quant->nbBit - 1;
+			quantifyingLevel = 0;
+			
+			for(k = 0; k < ((quant->nbBit)*(pictBW->component)); k++) {
+				if(quant->quantifyingNumber[k] == 1) {
+					quantifyingLevel += pow(2, exponent);
+				}
+				exponent--;
+			}
+			hist->matrixHisto[1][quantifyingLevel]++;
+		}
+	}
+}
+
+//======================================================================//

@@ -31,5 +31,6 @@ typedef struct {
 
 int initHistogram(Histogram* hist, int nbValue, FILE* log);
 int removeHistogram(Histogram* hist, FILE* log);
+int writingHistogram(Histogram* hist, FILE* descriptorBase, int nbBitQuantification);
 
 //======================================================================//

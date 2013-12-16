@@ -35,3 +35,14 @@ int removeHistogram(Histogram* hist, FILE* log) {
 }
 
 //======================================================================//
+
+int writingHistogram(Histogram* hist, FILE* descriptorBase, int nbBitQuantification) {
+	int i;
+	
+	for(i = 0; i < pow(2, nbBitQuantification); i++) {
+		fprintf(descriptorBase, "%d\t%d\n", hist->matrixHisto[0][i], hist->matrixHisto[1][i]);
+		fflush(stdout);
+	}
+}
+
+//======================================================================//

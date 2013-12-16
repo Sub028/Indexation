@@ -30,5 +30,7 @@ typedef struct {
 
 int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueValue);
 int quantifyBW(Quantification* quant, int GreyValue);
+int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant, Histogram* hist);
+int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Histogram* hist);
 
 //======================================================================//
