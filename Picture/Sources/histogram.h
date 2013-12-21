@@ -40,7 +40,8 @@
 #ifndef HISTOGRAM
 #define HISTOGRAM
 typedef struct {
-	int nbValue;;
+	int nbValue;
+	int score;
 	int** matrixHisto;
 } Histogram;
 #endif /* HISTOGRAM */

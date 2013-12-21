@@ -37,7 +37,7 @@
 
 int initHistogram(Histogram* hist, int nbValue, FILE* log) {
 	int i, valPixel = 0;
-	
+	hist->score = 0;
 	hist->nbValue = nbValue;
 	hist->matrixHisto = allocMatrix2D(2, hist->nbValue, log);	// 2 colonnes (colonne 0: valeurs, colonne 1: nb occurrence)
 	for(i = 0; i < hist->nbValue; i++) {
@@ -59,6 +59,7 @@ int initHistogram(Histogram* hist, int nbValue, FILE* log) {
 int removeHistogram(Histogram* hist, FILE* log) {
 	freeMatrix2D(hist->matrixHisto, 2, log);	// 2 colonnes
 	hist->nbValue = -1;
+	hist->score = -1;
 }
 
 //======================================================================//
@@ -77,6 +78,22 @@ int writingHistogram(Histogram* hist, FILE* descriptorBase, int nbBitQuantificat
 	for(i = 0; i < pow(2, nbBitQuantification); i++) {
 		fprintf(descriptorBase, "%d\t%d\n", hist->matrixHisto[0][i], hist->matrixHisto[1][i]);
 		fflush(stdout);
+	}
+}
+
+//======================================================================//
+
+/**
+ * \fn int calculateScore(Histogram* hist)
+ * \brief Calculer le "score" d'un histogramme.
+ * \param hist Histogramme duquel il faut calculer le "score"
+ */
+
+int calculateScore(Histogram* hist) {
+	int i;
+	
+	for(i = 0; i < hist->nbValue; i++) {
+		hist->score += (i+1)*hist->matrixHisto[1][i];
 	}
 }
 

@@ -56,7 +56,7 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 	//	dans la bases des descripteurs !
 	
 	FILE* pictureBase = fopen("Bases/base_descripteur_image.base", "a+");
-	srand(time(NULL));
+// 	srand(time(NULL));
 	sprintf(id, "ID%d", rand());
 	
 	// Allocation de la mémoire pour stocker l'image
@@ -78,12 +78,14 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 		storagePictureRGB(&pictRGB, picture);
 		
 		// Calcul de la quantification
-		calculateMatrixRGBQuantification(&pictRGB, &quant, &hist);
+		calculateMatrixRGBQuantification(&pictRGB, &quant, &hist, filename);
+		calculateScore(&hist);
 		
 		// Ecriture histogramme
+		strcat(id, "-");
 		strcat(id, pictRGB.filename);
 		time(&clock);
-		fprintf(descriptorBase, "%s\t%d\t%d\t%d\t%d\t%s", id, pictRGB.sizeY, pictRGB.sizeX , pictRGB.component, quant.nbBit, ctime(&clock));
+		fprintf(descriptorBase, "%s\t%d\t%d\t%d\t%d\t%d\t%s", id, pictRGB.sizeY, pictRGB.sizeX , pictRGB.component, quant.nbBit, hist.score, ctime(&clock));
 		writingHistogram(&hist, descriptorBase, (quant.nbBit*3));
 		
 		// Suppression de l'histogramme temporaire
@@ -102,12 +104,14 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 		storagePictureBW(&pictBW, picture);
 		
 		// Calcul de la quantification
-		calculateMatrixBWQuantification(&pictBW, &quant, &hist);
+		calculateMatrixBWQuantification(&pictBW, &quant, &hist, filename);
+		calculateScore(&hist);
 		
 		// Ecriture histogramme
+		strcat(id, "-");
 		strcat(id, pictBW.filename);
 		time(&clock);
-		fprintf(descriptorBase, "%s\t%d\t%d\t%d\t%d\t%s", id, pictBW.sizeY, pictBW.sizeX , pictBW.component, quant.nbBit, ctime(&clock));
+		fprintf(descriptorBase, "%s\t%d\t%d\t%d\t%d\t%d\t%s", id, pictBW.sizeY, pictBW.sizeX , pictBW.component, quant.nbBit, hist.score, ctime(&clock));
 		writingHistogram(&hist, descriptorBase, quant.nbBit);
 		
 		// Suppression de l'histogramme temporaire

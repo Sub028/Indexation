@@ -44,7 +44,7 @@
  * \param blueValue Composante bleue.
  */
 
-int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueValue) {
+int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueValue, char* filename) {
 	int powerOfTwo, exponent, positionQuantWord;
 	
 	if(redValue <= 255 && greenValue <= 255 && blueValue <= 255) {
@@ -85,7 +85,9 @@ int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueVal
 			positionQuantWord++;
 		}
 	} else {
-		printf("> ERROR: RGB level higher than 255: value = R: %d / G: %d / B: %d\n", redValue, greenValue, blueValue);
+		fprintf(stderr, "\033[31m");
+		fprintf(stderr, "> ERROR: RGB level higher than 255: value = R: %d / G: %d / B: %d (in file: %s)\n", redValue, greenValue, blueValue, filename);
+		fprintf(stderr, "\033[00m");
 		fflush(stdout);
 		return -1;
 	}
@@ -100,7 +102,7 @@ int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueVal
  * \param greyValue Composante grise.
  */
 
-int quantifyBW(Quantification* quant, int greyValue) {
+int quantifyBW(Quantification* quant, int greyValue, char* filename) {
 	int powerOfTwo, exponent, positionQuantWord;
 	
 	if(greyValue <= 255) {
@@ -119,7 +121,9 @@ int quantifyBW(Quantification* quant, int greyValue) {
 			positionQuantWord++;
 		}
 	} else {
-		printf("> ERROR: Grey level higher than 255: value = %d\n", greyValue);
+		fprintf(stderr, "\033[31m");
+		fprintf(stderr, "> ERROR: Grey level higher than 255: value = %d (in file: %s)\n", greyValue, filename);
+		fprintf(stderr, "\033[00m");
 		fflush(stdout);
 		return -1;
 	}
@@ -135,7 +139,7 @@ int quantifyBW(Quantification* quant, int greyValue) {
  * \param hist Structure contenant l'histogramme.
  */
 
-int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant, Histogram* hist) {
+int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant, Histogram* hist, char* filename) {
 	int i, j, k, exponent, quantifyingLevel;
 	int redValue, blueValue, greenValue;
 	
@@ -146,7 +150,7 @@ int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant,
 			redValue = pictRGB->matrixRed[i][j];
 			greenValue = pictRGB->matrixGreen[i][j];
 			blueValue = pictRGB->matrixBlue[i][j];
-			quantifyRGB(&(*quant), redValue, greenValue, blueValue);
+			quantifyRGB(&(*quant), redValue, greenValue, blueValue, filename);
 			
 			// Transformation du résultat de quantification
 			exponent = ((quant->nbBit)*(pictRGB->component)) - 1;
@@ -173,7 +177,7 @@ int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant,
  * \param hist Structure contenant l'histogramme.
  */
 
-int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Histogram* hist) {
+int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Histogram* hist, char* filename) {
 	int i, j, k, exponent, quantifyingLevel;
 	int greyValue;
 	
@@ -182,7 +186,7 @@ int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Hi
 		for(j = 0; j < pictBW->sizeX; j++) {
 			// Quantification
 			greyValue = pictBW->matrixGrey[i][j];
-			quantifyBW(&(*quant), greyValue);
+			quantifyBW(&(*quant), greyValue, filename);
 			
 			// Transformation du résultat de quantification
 			exponent = quant->nbBit - 1;
