@@ -8,7 +8,19 @@
 // Fichier H: histogram.h
 //======================================================================//
 // Fonctions:
-// - 
+// 	- Création d'un histogramme
+//	- Destruction d'un histogramme
+//	- Ecriture d'un histogramme
+//======================================================================//
+
+/**
+ * \file histogram.h
+ * \author Aurélien Veillard
+ * \brief Représentation d'un histogramme répresentatif de l'image traitée via une structure de données.
+ * \version 1.0
+ * \date 30 Novembre 2013
+ */
+
 //======================================================================//
 
 #include <stdio.h>
@@ -18,6 +30,12 @@
 #include "matrix.h"
 
 //======================================================================//
+
+/**
+ * \struct Histogram
+ * \brief Structure représentative d'un histogramme générique.
+ *	Permet de stocker l'histogramme de l'image traitée (RGB ou BW) et le nombre de valeur de l'histogramme.
+ */
 
 #ifndef HISTOGRAM
 #define HISTOGRAM
@@ -29,29 +47,8 @@ typedef struct {
 
 //======================================================================//
 
-#ifndef HISTOGRAM_RGB
-#define HISTOGRAM_RGB
-typedef struct {
-	int nbValue;
-	int columnQuantRGB;
-	int** matrixHistoRGB;
-} HistogramRGB;
-#endif /* HISTOGRAM_RGB */
-
-//======================================================================//
-
-#ifndef HISTOGRAM_BW
-#define HISTOGRAM_BW
-typedef struct {
-	int nbValue;
-	int columnQuantBW;
-	int** matrixHistoBW;
-} HistogramBW;
-#endif /* HISTOGRAM_BW */
-
-//======================================================================//
-
 int initHistogram(Histogram* hist, int nbValue, FILE* log);
 int removeHistogram(Histogram* hist, FILE* log);
+int writingHistogram(Histogram* hist, FILE* descriptorBase, int nbBitQuantification);
 
 //======================================================================//

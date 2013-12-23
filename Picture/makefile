@@ -1,10 +1,12 @@
-tst-img: matrix.o openPicture.o histogram.o quantification.o main.o utility.o
-	gcc -o tst-img openPicture.o matrix.o histogram.o quantification.o main.o utility.o -lm
+tst-img: matrix.o picture.o openPicture.o histogram.o quantification.o main.o utility.o
+	gcc -o tst-img picture.o openPicture.o matrix.o histogram.o quantification.o main.o utility.o -lm
 	rm *.o
+picture.o: Sources/picture.c Sources/picture.h Sources/matrix.h
+	gcc -c Sources/picture.c
 
 openPicture.o: Sources/openPicture.c Sources/openPicture.h Sources/matrix.h
 	gcc -c Sources/openPicture.c
-	
+
 matrix.o: Sources/matrix.c Sources/matrix.h Sources/picture.h
 	gcc -c Sources/matrix.c
 

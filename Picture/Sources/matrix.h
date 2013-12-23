@@ -3,19 +3,27 @@
 //======================================================================//
 // UPSSITECH L3 SMI 2013-2014
 // Auteur: VEILLARD Aurélien
-// Date de création: 18/11/13
+// Date de création: 30s/11/13
 //======================================================================//
 // Fichier H: matrix.h
 //======================================================================//
 // Fonctions:
-// - Lecture du contenu des fichiers images (au format .txt)
-// - Stockage des matrices des trois composantes par alloc dynamique
-// - Libération de la mémoire allouée
+// 	- Création d'une matrice dynamique
+// 	- Libération de la mémoire allouée à la matrice
+//======================================================================//
+
+/**
+ * \file matrix.h
+ * \author Aurélien Veillard
+ * \brief Permet de créer des matrices dynamiques.
+ * \version 1.0
+ * \date 30 Novembre 2013
+ */
+
 //======================================================================//
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "picture.h"
 
 //======================================================================//
 

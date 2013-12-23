@@ -8,7 +8,18 @@
 // Fichier H: quantification.h
 //======================================================================//
 // Fonctions:
-// - 
+// 	- Récupère les n premiers bits des int des composantes RGB ou BW
+//	- Stockage dans un tableau de la taille nbBit*nbComponent
+//======================================================================//
+
+/**
+ * \file quantification.h
+ * \author Aurélien Veillard
+ * \brief Permet de quantifier une ou trois matrices.
+ * \version 1.0
+ * \date 06 Décembre 2013
+ */
+
 //======================================================================//
 
 #include <stdio.h>
@@ -21,6 +32,11 @@
 
 //======================================================================//
 
+/**
+ * \struct Quantification
+ * \brief Structure permettant de stocker temporairement le résultat de la quantification.
+ */
+
 typedef struct {
 	int* quantifyingNumber;
 	int nbBit;	// Nombre de bit (de poids fort) à récupérer par composante (donner par le configurateur)
@@ -30,5 +46,7 @@ typedef struct {
 
 int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueValue);
 int quantifyBW(Quantification* quant, int GreyValue);
+int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant, Histogram* hist);
+int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Histogram* hist);
 
 //======================================================================//
