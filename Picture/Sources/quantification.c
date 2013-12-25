@@ -21,13 +21,20 @@
 //	Pour les BW: idem sauf pour une seule composante
 //======================================================================//
 
+/**
+ * \file quantification.c
+ * \author Aurélien Veillard
+ * \brief Permet de quantifier une ou trois matrices.
+ * \version 1.0
+ * \date 06 Décembre 2013
+ */
+
+//======================================================================//
+
 #include "quantification.h"
 
 //======================================================================//
 
-<<<<<<< HEAD
-int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueValue) {
-=======
 /**
  * \fn int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueValue)
  * \brief Calcul de la quantification d'un pixel.
@@ -38,19 +45,18 @@ int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueVal
  */
 
 int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueValue, char* filename) {
->>>>>>> 1a0055ce8d6dc04d1e4c7c712d8386a2c9d9094e
 	int powerOfTwo, exponent, positionQuantWord;
 	
-	if(RedValue <= 255 && GreenValue <= 255 && BlueValue <= 255) {
+	if(redValue <= 255 && greenValue <= 255 && blueValue <= 255) {
 		quant->quantifyingNumber = (int*)malloc(((quant->nbBit)*3)*sizeof(int));
 	
 		// Composante Rouge
 		positionQuantWord = 0;
 		for(exponent = 7; exponent >= (8-quant->nbBit); exponent--) {	// exponent = 7 pour un int de 8 le MSB vaut 2^7
 			powerOfTwo = pow(2, exponent);	// Deux à la puissance exponent
-			if((RedValue%powerOfTwo) <= (RedValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
+			if((redValue%powerOfTwo) <= (redValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
 				quant->quantifyingNumber[positionQuantWord] = 1;
-				RedValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
+				redValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
 			} else {
 				quant->quantifyingNumber[positionQuantWord] = 0;
 			}
@@ -59,9 +65,9 @@ int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueVal
 	
 		for(exponent = 7; exponent >= (8-quant->nbBit); exponent--) {	// exponent = 7 pour un int de 8 le MSB vaut 2^7
 			powerOfTwo = pow(2, exponent);	// Deux à la puissance exponent
-			if((GreenValue%powerOfTwo) <= (GreenValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
+			if((greenValue%powerOfTwo) <= (greenValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
 				quant->quantifyingNumber[positionQuantWord] = 1;
-				GreenValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
+				greenValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
 			} else {
 				quant->quantifyingNumber[positionQuantWord] = 0;
 			}
@@ -70,22 +76,18 @@ int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueVal
 	
 		for(exponent = 7; exponent >= (8-quant->nbBit); exponent--) {	// exponent = 7 pour un int de 8 le MSB vaut 2^7
 			powerOfTwo = pow(2, exponent);	// Deux à la puissance exponent
-			if((BlueValue%powerOfTwo) <= (BlueValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
+			if((blueValue%powerOfTwo) <= (blueValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
 				quant->quantifyingNumber[positionQuantWord] = 1;
-				BlueValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
+				blueValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
 			} else {
 				quant->quantifyingNumber[positionQuantWord] = 0;
 			}
 			positionQuantWord++;
 		}
 	} else {
-<<<<<<< HEAD
-		printf("> ERROR: RGB level higher than 255: value = R: %d / G: %d / B: %d\n", RedValue, GreenValue, BlueValue);
-=======
 		fprintf(stderr, "\033[31m");
 		fprintf(stderr, "> ERROR: RGB level higher than 255: value = R: %d / G: %d / B: %d (in file: %s)\n", redValue, greenValue, blueValue, filename);
 		fprintf(stderr, "\033[00m");
->>>>>>> 1a0055ce8d6dc04d1e4c7c712d8386a2c9d9094e
 		fflush(stdout);
 		return -1;
 	}
@@ -93,9 +95,6 @@ int quantifyRGB(Quantification* quant, int redValue, int greenValue, int blueVal
 
 //======================================================================//
 
-<<<<<<< HEAD
-int quantifyBW(Quantification* quant, int GreyValue) {
-=======
 /**
  * \fn int quantifyBW(Quantification* quant, int greyValue)
  * \brief Calcul de la quantification d'un pixel.
@@ -104,39 +103,32 @@ int quantifyBW(Quantification* quant, int GreyValue) {
  */
 
 int quantifyBW(Quantification* quant, int greyValue, char* filename) {
->>>>>>> 1a0055ce8d6dc04d1e4c7c712d8386a2c9d9094e
 	int powerOfTwo, exponent, positionQuantWord;
 	
-	if(GreyValue <= 255) {
+	if(greyValue <= 255) {
 		quant->quantifyingNumber = (int*)malloc((quant->nbBit)*sizeof(int));
 	
 		// Composante Rouge
 		positionQuantWord = 0;
 		for(exponent = 7; exponent >= (8-quant->nbBit); exponent--) {	// exponent = 7 pour un int de 8 le MSB vaut 2^7
 			powerOfTwo = pow(2, exponent);	// Deux à la puissance exponent
-			if((GreyValue%powerOfTwo) <= (GreyValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
+			if((greyValue%powerOfTwo) <= (greyValue-1)) {	// Si le modulo du nombre par la puissance de deux est inférieur au nombre moins un alors le nombre contient cette puissance de deux
 				quant->quantifyingNumber[positionQuantWord] = 1;
-				GreyValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
+				greyValue -= powerOfTwo;	// Si la puissance de deux est contenu alors on la retranche au nombre pour poursuivre le traitement
 			} else {
 				quant->quantifyingNumber[positionQuantWord] = 0;
 			}
 			positionQuantWord++;
 		}
 	} else {
-<<<<<<< HEAD
-		printf("> ERROR: Grey level higher than 255: value = %d\n", GreyValue);
-=======
 		fprintf(stderr, "\033[31m");
 		fprintf(stderr, "> ERROR: Grey level higher than 255: value = %d (in file: %s)\n", greyValue, filename);
 		fprintf(stderr, "\033[00m");
->>>>>>> 1a0055ce8d6dc04d1e4c7c712d8386a2c9d9094e
 		fflush(stdout);
 		return -1;
 	}
 }	
 
-<<<<<<< HEAD
-=======
 //======================================================================//
 
 /**
@@ -211,5 +203,4 @@ int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Hi
 	}
 }
 
->>>>>>> 1a0055ce8d6dc04d1e4c7c712d8386a2c9d9094e
 //======================================================================//
