@@ -33,7 +33,7 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 	//TODO : Il ne faut pas oublier d'inscrire le descripteur 
 	//	dans la bases des descripteur !
 	FILE* pictureBase = fopen("Bases/base_descripteur_image.base", "a+");
-	srand(time(NULL));
+// 	srand(time(NULL));
 	sprintf(id, "ID%d", rand());
 	
 	// Allocation de la mémoire pour stocker l'image
@@ -107,11 +107,23 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 			}
 		}
 		
+<<<<<<< HEAD
+=======
+		// Calcul de la quantification
+		calculateMatrixRGBQuantification(&pictRGB, &quant, &hist, filename);
+		calculateScore(&hist);
+>>>>>>> 1a0055ce8d6dc04d1e4c7c712d8386a2c9d9094e
 		
 		// Ecriture histogramme
+		strcat(id, "-");
 		strcat(id, pictRGB.filename);
 		time(&clock);
+<<<<<<< HEAD
 		fprintf(descriptorBase, "%s\t%d\t%d\t%d\t%d\t%s", id, pictRGB.sizeY, pictRGB.sizeX , pictRGB.component, quant.nbBit, ctime(&clock));
+=======
+		fprintf(descriptorBase, "%s\t%d\t%d\t%d\t%d\t%d\t%s", id, pictRGB.sizeY, pictRGB.sizeX , pictRGB.component, quant.nbBit, hist.score, ctime(&clock));
+		writingHistogram(&hist, descriptorBase, (quant.nbBit*3));
+>>>>>>> 1a0055ce8d6dc04d1e4c7c712d8386a2c9d9094e
 		
 		for(i = 0; i < pow(2, (quant.nbBit*3)); i++) {
 			fprintf(descriptorBase, "%d\t%d\n", hist.matrixHisto[0][i], hist.matrixHisto[1][i]);
@@ -138,6 +150,7 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 		pictBW.component = nbComponent;
 		pictBW.matrixGrey = allocMatrix2D(pictBW.sizeY, pictBW.sizeX, log);
 		
+<<<<<<< HEAD
 		// STOCKAGE TEMPORAIRE DE LA COMPOSANTE GRISE
 		// Matrice grey
 		for(i = 0; i < pictBW.sizeY; i++) {
@@ -166,16 +179,27 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 				hist.matrixHisto[1][quantifyingLevel]++;
 			}
 		}
+=======
+		// Calcul de la quantification
+		calculateMatrixBWQuantification(&pictBW, &quant, &hist, filename);
+		calculateScore(&hist);
+>>>>>>> 1a0055ce8d6dc04d1e4c7c712d8386a2c9d9094e
 		
 		// Ecriture histogramme
+		strcat(id, "-");
 		strcat(id, pictBW.filename);
 		time(&clock);
+<<<<<<< HEAD
 		fprintf(pictureBase, "%s\t%d\t%d\t%d\t%d\t%s", id, pictBW.sizeY, pictBW.sizeX , pictBW.component, quant.nbBit, ctime(&clock));
 		
 		for(i = 0; i < pow(2, quant.nbBit); i++) {
 			fprintf(pictureBase, "%d\t%d\n", hist.matrixHisto[0][i], hist.matrixHisto[1][i]);
 			fflush(stdout);
 		}
+=======
+		fprintf(descriptorBase, "%s\t%d\t%d\t%d\t%d\t%d\t%s", id, pictBW.sizeY, pictBW.sizeX , pictBW.component, quant.nbBit, hist.score, ctime(&clock));
+		writingHistogram(&hist, descriptorBase, quant.nbBit);
+>>>>>>> 1a0055ce8d6dc04d1e4c7c712d8386a2c9d9094e
 		
 		removeHistogram(&hist, log);
 		freeMatrix2D(pictBW.matrixGrey, pictBW.sizeY, log);

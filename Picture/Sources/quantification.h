@@ -44,9 +44,9 @@ typedef struct {
 
 //======================================================================//
 
-int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueValue);
-int quantifyBW(Quantification* quant, int GreyValue);
-int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant, Histogram* hist);
-int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Histogram* hist);
+int quantifyRGB(Quantification* quant, int RedValue, int GreenValue, int BlueValue, char* filename);
+int quantifyBW(Quantification* quant, int GreyValue, char* filename);
+int calculateMatrixRGBQuantification(PictureRGB* pictRGB, Quantification* quant, Histogram* hist, char* filename);
+int calculateMatrixBWQuantification(PictureBW* pictBW, Quantification* quant, Histogram* hist, char* filename);
 
 //======================================================================//
