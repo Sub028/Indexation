@@ -19,15 +19,15 @@ void getStringUntil(char *input, char *output, char c);
 void splitHeaderJustSize(char *header, int *nbBars, int *nbWindows);
 void splitHeader(char *header, char *id, int *nbBars, int *nbWindows, char *date);
 void splitDate(char *dateIn, char *dateOut);
-int supprDescriptor(char *id);
-int supprDescriptorHeader(FILE *base, char *line);
+int supprDescriptor(char *id, char *baseType);
+int supprDescriptorHeader(FILE *base, char *line, char *baseType);
 void extractName(char *fullName, char *nameOnly);
 void extractExtension(char *fullName, char *extension);
 void createPath(char *fullName, char *prefix, char *suffix, char *fileName);
 int getIdInDescriptorBase(FILE *base, char *id, char *fileName);
 void getDescriptor(FILE *base, char *id);
 int getValueOf(char *key, int *value);
-void checkDescriptorBase(FILE *base, FILE *log);
-int getIfFileHasModified(char *id, char *fileName, FILE *log);
+void checkDescriptorBase(FILE *base, FILE *log, char *baseType);
+int getIfFileHasModified(char *id, char *fileName, FILE *log, char *baseType);
 
 #endif /*UTILITY_H*/

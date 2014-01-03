@@ -74,6 +74,7 @@ int main(int argc, char* argv[]) {
 	}
 	
 	fclose(picture);
+	
 	fprintf(log, "> Indexation of '%s' done!\n", argv[1]);
 	
 // 	if(error == 0) {
@@ -90,3 +91,5 @@ int main(int argc, char* argv[]) {
 	
 	return(EXIT_SUCCESS);
 }
+
+//======================================================================//

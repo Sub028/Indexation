@@ -1,25 +1,46 @@
-Indexation: Objects/indexation.o Objects/wavFile.o Objects/wavData.o Objects/wavHeader.o Objects/dynamicIntegerTab.o Objects/utility.o
-	mkdir Objects
-	mv *.o Objects
-	gcc -o Indexation Objects/indexation.o Objects/wavFile.o Objects/wavData.o Objects/wavHeader.o Objects/dynamicIntegerTab.o Objects/utility.o
+Indexation: indexation.o wavFile.o wavData.o wavHeader.o dynamicIntegerTab.o utility.o openPicture.o picture.o matrix.o histogram.o quantification.o 
+	gcc -o Indexation indexation.o wavFile.o wavData.o wavHeader.o dynamicIntegerTab.o utility.o openPicture.o picture.o matrix.o histogram.o quantification.o -lm
 
-Objects/indexation.o: Sources/indexation.c
+indexation.o: Sources/indexation.c
 	gcc -c Sources/indexation.c
 
-Objects/wavHeader.o: Sources/Sound/wavHeader.c Sources/Sound/wavHeader.h
+wavHeader.o: Sources/Sound/wavHeader.c Sources/Sound/wavHeader.h
 	gcc -c Sources/Sound/wavHeader.c
 
-Objects/wavData.o: Sources/Sound/wavData.c Sources/Sound/wavData.h
+wavData.o: Sources/Sound/wavData.c Sources/Sound/wavData.h
 	gcc -c Sources/Sound/wavData.c
 
-Objects/wavFile.o: Sources/Sound/wavFile.c Sources/Sound/wavFile.h
+wavFile.o: Sources/Sound/wavFile.c Sources/Sound/wavFile.h
 	gcc -c Sources/Sound/wavFile.c
 
-Objects/dynamicIntegerTab.o: Sources/Sound/Utility/dynamicIntegerTab.c Sources/Sound/Utility//dynamicIntegerTab.h
+
+
+dynamicIntegerTab.o: Sources/Utility/dynamicIntegerTab.c Sources/Sound/Utility/dynamicIntegerTab.h
 	gcc -c Sources/Utility/dynamicIntegerTab.c
 	
-Objects/utility.o: Sources/Sound/Utility/utility.c Sources/Sound/Utility/utility.h
+utility.o: Sources/Utility/utility.c Sources/Sound/Utility/utility.h
 	gcc -c Sources/Utility/utility.c
+
+
+
+openPicture.o: Sources/Picture/openPicture.c Sources/Picture/openPicture.h
+	gcc -c Sources/Picture/openPicture.c
+
+picture.o: Sources/Picture/picture.c Sources/Picture/picture.h Sources/Picture/matrix.h
+	gcc -c Sources/Picture/picture.c
+
+matrix.o: Sources/Picture/matrix.c Sources/Picture/matrix.h Sources/Picture/picture.h
+	gcc -c Sources/Picture/matrix.c
+
+histogram.o: Sources/Picture/histogram.c Sources/Picture/histogram.h Sources/Picture/matrix.h
+	gcc -c Sources/Picture/histogram.c
+
+quantification.o: Sources/Picture/quantification.c Sources/Picture/quantification.h
+	gcc -c Sources/Picture/quantification.c
+
+
 
 clear: 
 	rm *.o
+	rm -r Bases
+	rm log.log

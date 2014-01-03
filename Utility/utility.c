@@ -67,30 +67,30 @@ void getStringUntil(char *input, char *output, char c) {
 }
 
 /**
- * \fn void splitHeaderJustSize(char *header, int *nbBars, int *nbWindows)
+ * \fn void splitHeaderJustSize(char *header, int *nbColumns, int *nbLines)
  * \brief Permet d'extraire juste la taille de la matrice (descripteur audio).
  *
  * \param header Le header d'un descripteur.
- * \param nbBars Le nombre de barres en sorties.
- * \param nbWindows Le nombre de fenétres en sorties.
+ * \param nbColumns Le nombre de barres en sorties.
+ * \param nbLines Le nombre de fenétres en sorties.
  */
-void splitHeaderJustSize(char *header, int *nbBars, int *nbWindows) {
-	sscanf(header, "%*s\t%d\t%d", nbBars, nbWindows);
+void splitHeaderJustSize(char *header, int *nbColumns, int *nbLines) {
+	sscanf(header, "%*s\t%d\t%d", nbColumns, nbLines);
 }
 
 /**
- * \fn void splitHeader(char *header, char *id, int *nbBars, int *nbWindows, char *date)
+ * \fn void splitHeader(char *header, char *id, int *nbColumns, int *nbLines, char *date)
  * \brief Permet d'extraire toutes les composante d'un header audio
  *
  * \param header Le header d'un descripteur.
  * \param id L'ID du descripteur.
- * \param nbBars Le nombre de barres en sorties.
- * \param nbWindows Le nombre de fenétres en sorties.
+ * \param nbColumns Le nombre de barres en sorties.
+ * \param nbLines Le nombre de fenétres en sorties.
  * \param date La date de dernière modification du fichier.
  */
-void splitHeader(char *header, char *id, int *nbBars, int *nbWindows, char *date) {
+void splitHeader(char *header, char *id, int *nbColumns, int *nbLines, char *date) {
 	char buffer[5][BUFFER_SIZE] = {0};
-	sscanf(header, "%s\t%d\t%d\t%s%s%s%s%s", id, nbBars, nbWindows, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
+	sscanf(header, "%s\t%d\t%d\t%s%s%s%s%s", id, nbColumns, nbLines, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
 	sprintf(date, "%s %s %s %s %s\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
 }
 
@@ -187,19 +187,26 @@ void createPath(char *fullName, char *prefix, char *suffix, char *fileName) {
  * \param id L'ID du descripteur.
  * \return -1 si problème sur l'ouverture des fichiers 0 sinon
  */
-int supprDescriptor(char *id) {
+int supprDescriptor(char *id, char *baseType) {
 	char buffer[BUFFER_SIZE];
 	char curentID[BUFFER_SIZE];
 	FILE *bufferFile;
 	FILE *base;
 	int i = 0;
-	int nbBars;
-	int nbWindows;
+	int nbColumns;
+	int nbLines;
 
-	if((bufferFile = fopen("Bases/base_descripteur_audio.base.tmp", "w")) == NULL) {
-		return(-1);
+	if(strcmp(baseType, "sound") == 0) {
+		base = fopen("Bases/base_descripteur_audio.base", "r");
+		bufferFile = fopen("Bases/base_descripteur_audio.base.tmp", "w");
+	} else if(strcmp(baseType, "text") == 0) {
+		base = fopen("Bases/base_descripteur_texte.base", "r");
+		bufferFile = fopen("Bases/base_descripteur_texte.tmp", "w");
+	} else if(strcmp(baseType, "image") == 0) {
+		base = fopen("Bases/base_descripteur_image.base", "r");
+		bufferFile = fopen("Bases/base_descripteur_image.base.tmp", "w");
 	}
-	if((base = fopen("Bases/base_descripteur_audio.base", "r")) == NULL) {
+	if(bufferFile == NULL || base == NULL) {
 		return(-1);
 	}
 
@@ -213,8 +220,8 @@ int supprDescriptor(char *id) {
 		if(strcmp(curentID, id) != 0) {
 			fputs(buffer, bufferFile);
 		} else {
-			splitHeaderJustSize(buffer, &nbBars, &nbWindows);
-			for(i = 0; i < nbWindows; i++) {
+			splitHeaderJustSize(buffer, &nbColumns, &nbLines);
+			for(i = 0; i < nbLines; i++) {
 				fgets(buffer, BUFFER_SIZE, base);
 			}
 		}
@@ -222,7 +229,13 @@ int supprDescriptor(char *id) {
 	}
 	fclose(bufferFile);
 	fclose(base);
-	rename("Bases/base_descripteur_audio.base.tmp", "Bases/base_descripteur_audio.base");
+	if(strcmp(baseType, "sound") == 0) {
+		rename("Bases/base_descripteur_audio.base.tmp", "Bases/base_descripteur_audio.base");
+	} else if(strcmp(baseType, "text") == 0) {
+		rename("Bases/base_descripteur_texte.base.tmp", "Bases/base_descripteur_texte.base");
+	} else if(strcmp(baseType, "image") == 0) {
+		rename("Bases/base_descripteur_image.base.tmp", "Bases/base_descripteur_image.base");
+	}
 	return(0);
 }
 
@@ -234,15 +247,24 @@ int supprDescriptor(char *id) {
  * \param line Ligne a supprimer.
  * \return -1 si problème sur l'ouverture des fichiers 0 sinon
  */
-int supprDescriptorHeader(FILE *base, char *line) {
+int supprDescriptorHeader(FILE *base, char *line, char *baseType) {
 	char buffer[BUFFER_SIZE];
 	FILE *bufferFile;
 	int i = 0;
 
 	rewind(base);
-	if((bufferFile = fopen("Bases/liste_base_audio.base.tmp", "w")) == NULL) {
+
+	if(strcmp(baseType, "sound") == 0) {
+		bufferFile = fopen("Bases/liste_base_audio.base.tmp", "w");
+	} else if(strcmp(baseType, "text") == 0) {
+		bufferFile = fopen("Bases/liste_base_texte.tmp", "w");
+	} else if(strcmp(baseType, "image") == 0) {
+		bufferFile = fopen("Bases/liste_base_image.base.tmp", "w");
+	}
+	if(bufferFile == NULL) {
 		return(-1);
 	}
+
 	while(fgets(buffer, BUFFER_SIZE, base)) {
 		if(strcmp(buffer, line) != 0) {
 			fputs(buffer, bufferFile);
@@ -250,8 +272,16 @@ int supprDescriptorHeader(FILE *base, char *line) {
 	}
 	fclose(bufferFile);
 	fclose(base);
-	rename("Bases/liste_base_audio.base.tmp", "Bases/liste_base_audio.base");
-	base = fopen("Bases/liste_base_audio.base", "a+");
+	if(strcmp(baseType, "sound") == 0) {
+		rename("Bases/liste_base_audio.base.tmp", "Bases/liste_base_audio.base");
+		base = fopen("Bases/liste_base_audio.base", "a+");
+	} else if(strcmp(baseType, "text") == 0) {
+		rename("Bases/liste_base_texte.base.tmp", "Bases/liste_base_texte.base");
+		base = fopen("Bases/liste_base_texte.base", "a+");
+	} else if(strcmp(baseType, "image") == 0) {
+		rename("Bases/liste_base_image.base.tmp", "Bases/liste_base_image.base");
+		base = fopen("Bases/liste_base_image.base", "a+");
+	}
 	return(0);
 }
 
@@ -261,7 +291,7 @@ int supprDescriptorHeader(FILE *base, char *line) {
  *
  * \param fullName Le chemin complet du fichier.
  */
-void checkDescriptorBase(FILE *base, FILE *log) {
+void checkDescriptorBase(FILE *base, FILE *log, char *baseType) {
 	char currentId[BUFFER_SIZE] = {0};
 	char currentFileName[BUFFER_SIZE] = {0};
 	char buffer[BUFFER_SIZE] = {0};
@@ -277,8 +307,8 @@ void checkDescriptorBase(FILE *base, FILE *log) {
 		if(file == NULL) {
 			fprintf(log, "CHECK DATABASE : %s \t DELETED OF BASE ! \n", currentFileName);
 			sprintf(buffer, "%s\t%s\n", currentFileName, currentId);
-			supprDescriptorHeader(base, buffer);
-			supprDescriptor(currentId); 
+			supprDescriptorHeader(base, buffer, baseType);
+			supprDescriptor(currentId, baseType); 
 			continue;
 		}
 		fclose(file);
@@ -399,42 +429,57 @@ int getValueOf(char *key, int *value) {
  * \param log Fichier de log.
  * \return -1 les information sont vide, ou ficheir non trouver.
  */
-int getIfFileHasModified(char *id, char *fileName, FILE *log) {
+int getIfFileHasModified(char *id, char *fileName, FILE *log, char *baseType) {
 	char buffer[BUFFER_SIZE] = {0};
 	char header[BUFFER_SIZE] = {0};
 	char currentID[BUFFER_SIZE] = {0};
 	char date[BUFFER_SIZE] = {0};
 	char fileDate[BUFFER_SIZE] = {0};
 	char headerID[BUFFER_SIZE] = {0};
-	FILE *soundBase = fopen("Bases/base_descripteur_audio.base", "r");
-	int nbBars;
-	int nbWindows;
+	FILE *base;
+	int nbColumns;
+	int nbLines;
 	struct stat st;
+
+	if(strcmp(baseType, "sound") == 0) {
+		base = fopen("Bases/base_descripteur_audio.base", "r");
+	} else if(strcmp(baseType, "text") == 0) {
+		base = fopen("Bases/base_descripteur_texte.base", "r");
+	} else if(strcmp(baseType, "image") == 0) {
+		base = fopen("Bases/base_descripteur_image.base", "r");
+	}
+
+	if(base == NULL) {
+		fprintf(log, "BASE OPENNING FAILED ");
+		return(-1);
+	}
 
 	if(stat(fileName, &st) == -1) {
 		fprintf(log, "STAT ERROR ");
+		fclose(base);
 		return(-1);
 	}
-	while(!feof(soundBase)) {
-		fgets(buffer, BUFFER_SIZE, soundBase);
+	while(!feof(base)) {
+		fgets(buffer, BUFFER_SIZE, base);
 		if(buffer[0] != 'I') {
 			continue;
 		}
 		getStringUntil(buffer, currentID, '\t');
 		if(strcmp(currentID, id) == 0) {
 			strcpy(header, buffer);
-			splitHeader(header, headerID, &nbBars, &nbWindows, date);
+			splitHeader(header, headerID, &nbColumns, &nbLines, date);
+			splitDate(date, buffer);
 			splitDate(ctime(&st.st_mtime), fileDate);
-			if(strcmp(date, fileDate) == 0) {
-				fclose(soundBase);
+			if(strcmp(buffer, fileDate) == 0) {
+				fclose(base);
 				return(1);
 			} else {
+				fclose(base);
 				return(0);
 			}
-			
 		}
 		memset(currentID, 0, BUFFER_SIZE);
 	}
-	fclose(soundBase);
+	fclose(base);
 	return(-1);
 }

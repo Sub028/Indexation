@@ -11,8 +11,8 @@ picture.o: Sources/picture.c Sources/picture.h Sources/matrix.h
 
 openPicture.o: Sources/openPicture.c Sources/openPicture.h Sources/matrix.h
 	gcc -c Sources/openPicture.c
-
-matrix.o: Sources/matrix.c Sources/matrix.h Sources/picture.h
+	
+matrix.o: Sources/matrix.c Sources/matrix.h
 	gcc -c Sources/matrix.c
 
 histogram.o: Sources/histogram.c Sources/histogram.h Sources/matrix.h
