@@ -1,15 +1,18 @@
-tst-text: main.o histogram.o parser.o
-	gcc -o tst-text main.o histogram.o parser.o
+tst-text: main.o histogramText.o parser.o descriptor.o
+	gcc -o tst-text main.o histogramText.o parser.o descriptor.o
 	rm *.o
 
-histogram.o: Sources/histogram.c Sources/histogram.h
-	gcc -c Sources/histogram.c
-
-main.o: Sources/main.c
-	gcc -c Sources/main.c
+histogramText.o: Sources/histogramText.c Sources/histogramText.h
+	gcc -c Sources/histogramText.c
 
 parser.o: Sources/parser.c Sources/parser.h
 	gcc -c Sources/parser.c
+
+descriptor.o: Sources/descriptor.c Sources/descriptor.h
+	gcc -c Sources/descriptor.c
+
+main.o: Sources/main.c
+	gcc -c Sources/main.c
 
 clean:
 	rm *.o	

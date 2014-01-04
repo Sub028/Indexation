@@ -140,14 +140,14 @@ int writeWavNormalizedDataFile(WavFile *wavFile) {
 }
 
 /**
- * \fn int writeDescriptor(WavFile *wavFile, FILE *desciptorBase, FILE *log)
+ * \fn int writeDescriptor(WavFile *wavFile, FILE *descriptorBase, FILE *log)
  * \brief Ecrit le descipteur de donnée
  *
  * \param wavFile Fichier wav en mémoire.
- * \param desciptorBase Bases des descripteur audio.
+ * \param descriptorBase Bases des descripteur audio.
  * \return -1 si une erreur lors de l'ouverture sinon 0.
  */
-int writeDescriptor(WavFile *wavFile, FILE *desciptorBase, FILE *log) {
+int writeDescriptor(WavFile *wavFile, FILE *descriptorBase, FILE *log) {
 	struct stat st;
 	char buffer[BUFFER_SIZE] = {0};
 	char id[BUFFER_SIZE] = {0};
@@ -206,7 +206,7 @@ int writeDescriptor(WavFile *wavFile, FILE *desciptorBase, FILE *log) {
 		freeIntegerTab(&dynTab[i]);
 	}
 	fprintf(soundBase, "\n");
-	fprintf(desciptorBase, "%s\t%s\n", wavFile->fileName, id);
+	fprintf(descriptorBase, "%s\t%s\n", wavFile->fileName, id);
 	fclose(soundBase);
 	return(0);
 }

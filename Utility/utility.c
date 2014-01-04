@@ -200,8 +200,8 @@ int supprDescriptor(char *id, char *baseType) {
 		base = fopen("Bases/base_descripteur_audio.base", "r");
 		bufferFile = fopen("Bases/base_descripteur_audio.base.tmp", "w");
 	} else if(strcmp(baseType, "text") == 0) {
-		base = fopen("Bases/base_descripteur_texte.base", "r");
-		bufferFile = fopen("Bases/base_descripteur_texte.tmp", "w");
+		base = fopen("Bases/base_descripteur_text.base", "r");
+		bufferFile = fopen("Bases/base_descripteur_text.base.tmp", "w");
 	} else if(strcmp(baseType, "image") == 0) {
 		base = fopen("Bases/base_descripteur_image.base", "r");
 		bufferFile = fopen("Bases/base_descripteur_image.base.tmp", "w");
@@ -232,7 +232,7 @@ int supprDescriptor(char *id, char *baseType) {
 	if(strcmp(baseType, "sound") == 0) {
 		rename("Bases/base_descripteur_audio.base.tmp", "Bases/base_descripteur_audio.base");
 	} else if(strcmp(baseType, "text") == 0) {
-		rename("Bases/base_descripteur_texte.base.tmp", "Bases/base_descripteur_texte.base");
+		rename("Bases/base_descripteur_text.base.tmp", "Bases/base_descripteur_text.base");
 	} else if(strcmp(baseType, "image") == 0) {
 		rename("Bases/base_descripteur_image.base.tmp", "Bases/base_descripteur_image.base");
 	}
@@ -257,7 +257,7 @@ int supprDescriptorHeader(FILE *base, char *line, char *baseType) {
 	if(strcmp(baseType, "sound") == 0) {
 		bufferFile = fopen("Bases/liste_base_audio.base.tmp", "w");
 	} else if(strcmp(baseType, "text") == 0) {
-		bufferFile = fopen("Bases/liste_base_texte.tmp", "w");
+		bufferFile = fopen("Bases/liste_base_text.base.tmp", "w");
 	} else if(strcmp(baseType, "image") == 0) {
 		bufferFile = fopen("Bases/liste_base_image.base.tmp", "w");
 	}
@@ -276,8 +276,8 @@ int supprDescriptorHeader(FILE *base, char *line, char *baseType) {
 		rename("Bases/liste_base_audio.base.tmp", "Bases/liste_base_audio.base");
 		base = fopen("Bases/liste_base_audio.base", "a+");
 	} else if(strcmp(baseType, "text") == 0) {
-		rename("Bases/liste_base_texte.base.tmp", "Bases/liste_base_texte.base");
-		base = fopen("Bases/liste_base_texte.base", "a+");
+		rename("Bases/liste_base_text.base.tmp", "Bases/liste_base_text.base");
+		base = fopen("Bases/liste_base_text.base", "a+");
 	} else if(strcmp(baseType, "image") == 0) {
 		rename("Bases/liste_base_image.base.tmp", "Bases/liste_base_image.base");
 		base = fopen("Bases/liste_base_image.base", "a+");
@@ -444,7 +444,7 @@ int getIfFileHasModified(char *id, char *fileName, FILE *log, char *baseType) {
 	if(strcmp(baseType, "sound") == 0) {
 		base = fopen("Bases/base_descripteur_audio.base", "r");
 	} else if(strcmp(baseType, "text") == 0) {
-		base = fopen("Bases/base_descripteur_texte.base", "r");
+		base = fopen("Bases/base_descripteur_text.base", "r");
 	} else if(strcmp(baseType, "image") == 0) {
 		base = fopen("Bases/base_descripteur_image.base", "r");
 	}

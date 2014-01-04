@@ -5,22 +5,21 @@
 // Auteur: ZERBIB Yoanna
 // Date de création: 18/11/13
 //======================================================================//
-// Fichier C: parser.c
+// Fichier H: parser.h
 //======================================================================//
 // Module TEXTES:
 // - Indexation des textes (.xml)
 //======================================================================//
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "Utility/utility.h"
+
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "histogram.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-
-void get_words(FILE *file);
-int good_word(char* word);
 void replace_bad_letters(char c);
+int good_word(char* word, FILE *log);
+int get_words(FILE *file, FILE *log, FILE *descriptorBase, char *filename);
 
 #endif /*PARSER_H*/

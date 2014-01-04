@@ -31,7 +31,7 @@ int writeWavFile(WavFile *wavFile);
 int writeWavHeaderFile(WavFile *wavFile);
 int writeWavDataFile(WavFile *wavFile);
 int writeWavNormalizedDataFile(WavFile *wavFile);
-int writeDescriptor(WavFile *wavFile, FILE *desciptorBase, FILE *log);
+int writeDescriptor(WavFile *wavFile, FILE *descriptorBase, FILE *log);
 void closeWavFile(WavFile *wavFile);
 
 #endif /*WAVE_FILE_H*/
