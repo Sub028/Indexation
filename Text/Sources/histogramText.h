@@ -20,14 +20,25 @@
 
 #define MAX_BUFFER_SIZE 1000
 
-//structure d'une cellule
+/**
+* \struct Cel
+* \brief Cellule d'un histogramme.
+*
+* Permet de stocker un mot avec son occurence, et la cellule suivante
+*/
 typedef struct Cel {
 	char key[MAX_BUFFER_SIZE];
 	int value;
 	struct Cel* ptr_next_cel;
 } Cel;
 
-//pointeurs de debut et fin sur l'histogramme
+/**
+* \struct Histogram
+* \brief Données d'un histogramme 
+*
+* Permet de connaitre la premiere et la derniere donnée d'un fichier charge
+* ainsi que le nombre de cellules.
+*/
 typedef struct Histogram {
 	Cel* begin;
 	Cel* end;

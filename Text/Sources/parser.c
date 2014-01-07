@@ -18,23 +18,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-void replace_bad_letters(char c) {
-	//pour mettre la premiere lettre en minuscule
-	c = tolower(c); 
-
-/*	//pour enlever les accents*/
-/*	if (c == 'à') {*/
-/*		c = 'a';*/
-/*	}*/
-/*	if (c == 'é' || c == 'è' || c == 'ê' || c == 'ë') {*/
-/*		c = 'e';*/
-/*	}*/
-/*	if (c == 'ù') {*/
-/*		c = 'u';*/
-/*	}*/
-}
-
-//fonction qui ne garde que les 'bons' mots
+/**
+* \fn int good_word(char* word)
+* \brief Permet de ne garder que les 'bons' mots
+*
+* \param word La chaine de caracteres a modifier si necessaire
+*/
 int good_word(char* word, FILE *log) {
 	int res = 1;
 	int i = 0;
@@ -75,7 +64,12 @@ int good_word(char* word, FILE *log) {
 	return res;
 }
 
-//fonction servant a recuperer tous les mots sans les balises
+/**
+* \fn void get_words(FILE *file)
+* \brief Permet de recuperer tous les mots sans les balises
+*
+* \param file Le fichier txt d'ou on veut extraire le texte 
+*/
 int get_words(FILE *file, FILE *log, FILE *descriptorBase, char *filename) { 
 	char sentence[MAX_BUFFER_SIZE] = {0};
 	char word[MAX_BUFFER_SIZE] = {0};
@@ -107,7 +101,6 @@ int get_words(FILE *file, FILE *log, FILE *descriptorBase, char *filename) {
 			// s'il s'agit d'un 'vrai' mot
  			if (read) {
  				sentence[i] = tolower(sentence[i]);
- 				replace_bad_letters(sentence[i]);
 				if(sentence[i] == '\n') {
 					break;
 				}

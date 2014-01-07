@@ -18,7 +18,6 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-void replace_bad_letters(char c);
 int good_word(char* word, FILE *log);
 int get_words(FILE *file, FILE *log, FILE *descriptorBase, char *filename);
 

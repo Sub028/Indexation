@@ -14,7 +14,12 @@
 #ifndef DESCRIPTOR_H
 #define DESCRIPTOR_H
 
-//structure d'un descripteur
+/**
+* \struct Descriptor
+* \brief Descriptor.
+*
+* Permet de stocker un id, un histogramme et son nombre de mots
+*/
 typedef struct Descriptor {
 	char* id;
 	Histogram *ptr_histo;

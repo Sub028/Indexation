@@ -14,18 +14,33 @@
 #include "histogramText.h"
 #include <time.h>
 
-//fonction pour initialiser l'histogramme
+/**
+* \fn void init_histogram(Histogram *h)
+* \brief Initialise un histogramme.
+*
+* \param h L'histogramme.
+*/
 void init_histogram(Histogram *h) {
 	h->begin = NULL;
 	h->end = NULL;
 }
 
-//fonction booleenne pour savoir si l'histogramme est vide
+/**
+* \fn int is_void(Histogram *h)
+* \brief Permet de savoir si l'histogramme est vide.
+*
+* \param h L'histogramme.
+*/
 int is_void(Histogram *h) {
 	return(h->begin == NULL);
 }
 
-//fonction qui retourne le nombre de mots d'un histogramme
+/**
+* \fn int get_nb_words(Histogram *h)
+* \brief Permet de connaitre le nombre de mots d'un histogramme
+*
+* \param h L'histogramme.
+*/
 int get_nb_words(Histogram *h) {
 	Cel *current_cel = h->begin;
 	int nb_words = 0;
@@ -36,7 +51,13 @@ int get_nb_words(Histogram *h) {
 	return nb_words;
 }
 
-//fonction qui ecrit dans un fichier l'histogramme
+/**
+* \fn void display_histogram(Histogram *h, FILE *out)
+* \brief Permet d'afficher un histogramme
+*
+* \param h L'histogramme.
+* \param out Un fichier txt de sortie.
+*/
 void display_histogram(Histogram *h, FILE *out) {
 	Cel *current_cel = h->begin;
 	while(current_cel != NULL) {		
@@ -45,7 +66,12 @@ void display_histogram(Histogram *h, FILE *out) {
 	}
 }
 
-//fonction a effectuer a la fin du programme appelant qui libere l'espace memoire du descripteur
+/**
+* \fn void free_histogram(Histogram *h)
+* \brief Permet de liberer l'espace memoire de l'histogramme
+*
+* \param h L'histogramme.
+*/
 void free_histogram(Histogram *h) {
 	Cel *current_cel = h->begin;
 	Cel *next_cel;
