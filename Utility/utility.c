@@ -95,13 +95,13 @@ void splitHeader(char *header, char *id, int *nbColumns, int *nbLines, char *dat
 }
 
 /**
- * \fn void splitDate(char *dateIn, char *dateOut)
+ * \fn void formatDate(char *dateIn, char *dateOut)
  * \brief Permet de formaté la date pour la comparé.
  *
  * \param dateIn Date en entrée.
  * \param dateOut Date en sortie.
  */
-void splitDate(char *dateIn, char *dateOut) {
+void formatDate(char *dateIn, char *dateOut) {
 	char buffer[5][BUFFER_SIZE] = {0};
 	sscanf(dateIn, "%s%s%s%s%s", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
 	sprintf(dateOut, "%s %s %s %s %s\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
@@ -181,10 +181,11 @@ void createPath(char *fullName, char *prefix, char *suffix, char *fileName) {
 }
 
 /**
- * \fn int supprDescriptor(char *id)
+ * \fn int supprDescriptor(char *id, char *baseType)
  * \brief Supprime un descripteur.
  *
  * \param id L'ID du descripteur.
+ * \param baseType Type de la base de donnée a traiter.
  * \return -1 si problème sur l'ouverture des fichiers 0 sinon
  */
 int supprDescriptor(char *id, char *baseType) {
@@ -240,11 +241,12 @@ int supprDescriptor(char *id, char *baseType) {
 }
 
 /**
- * \fn int supprDescriptorHeader(FILE *base, char *line)
+ * \fn int supprDescriptorHeader(FILE *base, char *line, char *baseType)
  * \brief Supprime une association fichier/ID.
  *
  * \param base Base des descripteur.
  * \param line Ligne a supprimer.
+ * \param baseType Type de la base de donnée a traiter.
  * \return -1 si problème sur l'ouverture des fichiers 0 sinon
  */
 int supprDescriptorHeader(FILE *base, char *line, char *baseType) {
@@ -286,10 +288,11 @@ int supprDescriptorHeader(FILE *base, char *line, char *baseType) {
 }
 
 /**
- * \fn void checkDescriptorBase(FILE *base
+ * \fn void checkDescriptorBase(FILE *base, char *baseType)
  * \brief Permet de controler si les base ne contienne pas de fichier supprimé
  *
  * \param fullName Le chemin complet du fichier.
+ * \param baseType Type de la base de donnée a traiter.
  */
 void checkDescriptorBase(FILE *base, FILE *log, char *baseType) {
 	char currentId[BUFFER_SIZE] = {0};
@@ -421,12 +424,13 @@ int getValueOf(char *key, int *value) {
 }
 
 /**
- * \fn int getIfFileHasModified(char *id, char *header, char *fileName, FILE *log)
+ * \fn int getIfFileHasModified(char *id, char *header, char *fileName, FILE *log, char *baseType)
  * \brief Permet de savoir si le fichier courant a été modifier.
  * 
  * \param id Identifiant du descripteur.
  * \param fileName Chemin du fichier.
  * \param log Fichier de log.
+ * \param baseType Type de la base de donnée a traiter.
  * \return -1 les information sont vide, ou ficheir non trouver.
  */
 int getIfFileHasModified(char *id, char *fileName, FILE *log, char *baseType) {
@@ -468,8 +472,8 @@ int getIfFileHasModified(char *id, char *fileName, FILE *log, char *baseType) {
 		if(strcmp(currentID, id) == 0) {
 			strcpy(header, buffer);
 			splitHeader(header, headerID, &nbColumns, &nbLines, date);
-			splitDate(date, buffer);
-			splitDate(ctime(&st.st_mtime), fileDate);
+			formatDate(date, buffer);
+			formatDate(ctime(&st.st_mtime), fileDate);
 			if(strcmp(buffer, fileDate) == 0) {
 				fclose(base);
 				return(1);
