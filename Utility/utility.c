@@ -86,12 +86,13 @@ void splitHeaderJustSize(char *header, int *nbColumns, int *nbLines) {
  * \param id L'ID du descripteur.
  * \param nbColumns Le nombre de barres en sorties.
  * \param nbLines Le nombre de fenétres en sorties.
+ * \param type Le type du fichier indexer.
  * \param date La date de dernière modification du fichier.
  */
-void splitHeader(char *header, char *id, int *nbColumns, int *nbLines, char *date) {
+void splitHeader(char *header, char *id, int *nbColumns, int *nbLines, char *type, char *date) {
 	char buffer[5][BUFFER_SIZE] = {0};
-	sscanf(header, "%s\t%d\t%d\t%s%s%s%s%s", id, nbColumns, nbLines, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
-	sprintf(date, "%s %s %s %s %s\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
+	sscanf(header, "%s\t%d\t%d\t%s\t%s%s%s%s%s", id, nbColumns, nbLines, type, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
+	sprintf(date, "%s %s %s %s %s %s\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
 }
 
 /**
@@ -440,6 +441,7 @@ int getIfFileHasModified(char *id, char *fileName, FILE *log, char *baseType) {
 	char date[BUFFER_SIZE] = {0};
 	char fileDate[BUFFER_SIZE] = {0};
 	char headerID[BUFFER_SIZE] = {0};
+	char type[BUFFER_SIZE] = {0};
 	FILE *base;
 	int nbColumns;
 	int nbLines;
@@ -471,7 +473,7 @@ int getIfFileHasModified(char *id, char *fileName, FILE *log, char *baseType) {
 		getStringUntil(buffer, currentID, '\t');
 		if(strcmp(currentID, id) == 0) {
 			strcpy(header, buffer);
-			splitHeader(header, headerID, &nbColumns, &nbLines, date);
+			splitHeader(header, headerID, &nbColumns, &nbLines, type, date);
 			formatDate(date, buffer);
 			formatDate(ctime(&st.st_mtime), fileDate);
 			if(strcmp(buffer, fileDate) == 0) {

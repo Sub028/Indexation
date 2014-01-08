@@ -100,7 +100,7 @@ int display_descriptor(Descriptor *d, FILE *out, char *filename, FILE *log) {
 		return(-1);
 	}
 	sprintf(d->id, "ID%d%s", rand(), filename);
-	fprintf(out, "%s\t%d\t%d\t%s", d->id, 2, get_nb_words(d->ptr_histo), ctime(&st.st_mtime));
+	fprintf(out, "%s\t%d\t%d\t%s\t%s", d->id, 2, get_nb_words(d->ptr_histo), "text", ctime(&st.st_mtime));
 	display_histogram(d->ptr_histo, out);
 }
 

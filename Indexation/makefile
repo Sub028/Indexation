@@ -1,5 +1,15 @@
+All: Indexation Compare
+
 Indexation: indexation.o wavFile.o wavData.o wavHeader.o dynamicIntegerTab.o utility.o openPicture.o picture.o matrix.o histogram.o quantification.o histogramText.o parser.o descriptor.o
 	gcc -o Indexation indexation.o wavFile.o wavData.o wavHeader.o dynamicIntegerTab.o utility.o openPicture.o picture.o matrix.o histogram.o quantification.o histogramText.o parser.o descriptor.o -lm
+
+Compare: utility.o compare.o
+	gcc -o Compare utility.o compare.o
+
+# Compare
+
+compare.o: Sources/compare.c
+	gcc -c Sources/compare.c
 
 # Indexation
 

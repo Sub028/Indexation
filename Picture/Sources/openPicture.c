@@ -94,7 +94,7 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 		strcat(id, pictRGB.filename);
 		time(&clock);
 // 		fprintf(pictureBase, "%s\t%d\t%d\t%d\t%d\t%d\t%s", id, pictRGB.sizeY, pictRGB.sizeX , pictRGB.component, quant.nbBit, hist.score, ctime(&clock));
-		fprintf(pictureBase, "%s\t%d\t%d\t%s", id, 2, (int)pow(2, quant.nbBit * 3), ctime(&st.st_mtime));
+		fprintf(pictureBase, "%s\t%d\t%d\t%s\t%s", id, 2, (int)pow(2, quant.nbBit * 3), "picture", ctime(&st.st_mtime));
 		writingHistogram(&hist, pictureBase, (quant.nbBit*3));
 		
 		// Suppression de l'histogramme temporaire
@@ -121,7 +121,7 @@ int openPict(FILE* picture, FILE* log, FILE* descriptorBase, char* filename) {
 		strcat(id, pictBW.filename);
 		time(&clock);
 // 		fprintf(pictureBase, "%s\t%d\t%d\t%d\t%d\t%d\t%s", id, pictBW.sizeY, pictBW.sizeX , pictBW.component, quant.nbBit, hist.score, ctime(&clock));
-		fprintf(pictureBase, "%s\t%d\t%d\t%s", id, 2, (int)pow(2, quant.nbBit), ctime(&st.st_mtime));
+		fprintf(pictureBase, "%s\t%d\t%d\t%s", id, 2, (int)pow(2, quant.nbBit), "picture", ctime(&st.st_mtime));
 		writingHistogram(&hist, pictureBase, quant.nbBit);
 		
 		// Suppression de l'histogramme temporaire

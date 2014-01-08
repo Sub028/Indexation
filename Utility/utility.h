@@ -17,7 +17,7 @@
 int indexOfNameBegin(char *fullName);
 void getStringUntil(char *input, char *output, char c);
 void splitHeaderJustSize(char *header, int *nbBars, int *nbWindows);
-void splitHeader(char *header, char *id, int *nbBars, int *nbWindows, char *date);
+void splitHeader(char *header, char *id, int *nbColumns, int *nbLines, char *type, char *date);
 void splitDate(char *dateIn, char *dateOut);
 int supprDescriptor(char *id, char *baseType);
 int supprDescriptorHeader(FILE *base, char *line, char *baseType);

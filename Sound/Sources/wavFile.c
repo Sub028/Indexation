@@ -178,7 +178,7 @@ int writeDescriptor(WavFile *wavFile, FILE *descriptorBase, FILE *log) {
 		nbWindows++;
 	}
 
-	fprintf(soundBase, "%s\t%d\t%d\t%s", id, nbBar, nbWindows, ctime(&st.st_mtime));
+	fprintf(soundBase, "%s\t%d\t%d\t%s\t%s", id, nbBar, nbWindows, "sound", ctime(&st.st_mtime));
 	dynTab = (DynamicIntegerTab*)calloc(nbWindows, sizeof(DynamicIntegerTab));
 	for(i = 0; i < nbWindows; i++) {
 		initTab(&dynTab[i], nbBar);

@@ -26,9 +26,11 @@ int main(int argc, char *argv[]) {
 
 	time(&aclock);
 
+	log = fopen("log.log", "a");
+	fprintf(log, "%s", ctime(&aclock));
 	data = opendir("Data/");
 	if(data == NULL) {
-		perror("Probleme lors de l'ouverture du dossier ");
+		fprintf(log, "OPPENING DATABASE FAIL ");
 		return(EXIT_FAILURE);
 	}
 	descriptorBaseSound = fopen("Bases/liste_base_audio.base", "a+");
@@ -38,9 +40,6 @@ int main(int argc, char *argv[]) {
 	}
 	descriptorBasePictures = fopen("Bases/liste_base_image.base", "a+");
 	descriptorBaseTexts = fopen("Bases/liste_base_text.base", "a+");
-
-	log = fopen("log.log", "a");
-	fprintf(log, "%s", ctime(&aclock));
 
 	checkDescriptorBase(descriptorBaseSound, log, "sound");
 	checkDescriptorBase(descriptorBasePictures, log, "image");
@@ -147,7 +146,6 @@ int main(int argc, char *argv[]) {
 					fprintf(log, "FILE HAS BEEN MODIFIED ! \n");
 				}
 			}
-			continue;
 		}
 		memset(path, 0, BUFFER_SIZE);
 	}
