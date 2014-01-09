@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
 	getIdInDescriptorBase(desciptorBase, currentId, currentFileName);
 	writeDescriptor(&wavFile, desciptorBase, log);
 	
-	printf("DONE ! \n");
+	printf("DONE ! %d \n", sizeof(WavHeader));
 	closeWavFile(&wavFile);
 	close(desciptorBase);
 	return(EXIT_SUCCESS);

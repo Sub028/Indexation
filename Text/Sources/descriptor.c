@@ -94,7 +94,7 @@ void add_value(char *key, Descriptor *d) {
 */
 int display_descriptor(Descriptor *d, FILE *out, char *filename, FILE *log) {
 	struct stat st;
-	srand(time(NULL));
+// 	srand(time(NULL));
 	if(stat(filename, &st) == -1) {
 		fprintf(log, "STAT ERROR ");
 		return(-1);

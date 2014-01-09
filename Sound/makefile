@@ -1,5 +1,5 @@
-tst-son: main.o wavFile.o wavData.o wavHeader.o dynamicIntegerTab.o utility.o
-	gcc -o tst-son main.o wavHeader.o wavData.o wavFile.o dynamicIntegerTab.o utility.o
+tst-son: main.o wavFile.o wavData.o wavHeader.o histogramSound.o utility.o
+	gcc -o tst-son main.o wavHeader.o wavData.o wavFile.o histogramSound.o utility.o
 	rm *.o
 
 wavHeader.o: Sources/wavHeader.c Sources/wavHeader.h
@@ -11,8 +11,8 @@ wavData.o: Sources/wavData.c Sources/wavData.h
 wavFile.o: Sources/wavFile.c Sources/wavFile.h
 	gcc -c Sources/wavFile.c
 
-dynamicIntegerTab.o: Sources/Utility/dynamicIntegerTab.c Sources/Utility//dynamicIntegerTab.h
-	gcc -c Sources/Utility/dynamicIntegerTab.c
+histogramSound.o: Sources/histogramSound.c Sources/histogramSound.h
+	gcc -c Sources/histogramSound.c
 	
 utility.o: Sources/Utility/utility.c Sources/Utility/utility.h
 	gcc -c  Sources/Utility/utility.c

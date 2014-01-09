@@ -1,7 +1,7 @@
 All: Indexation Compare
 
-Indexation: indexation.o wavFile.o wavData.o wavHeader.o dynamicIntegerTab.o utility.o openPicture.o picture.o matrix.o histogram.o quantification.o histogramText.o parser.o descriptor.o
-	gcc -o Indexation indexation.o wavFile.o wavData.o wavHeader.o dynamicIntegerTab.o utility.o openPicture.o picture.o matrix.o histogram.o quantification.o histogramText.o parser.o descriptor.o -lm
+Indexation: indexation.o wavFile.o wavData.o wavHeader.o histogramSound.o utility.o openPicture.o picture.o matrix.o histogram.o quantification.o histogramText.o parser.o descriptor.o
+	gcc -o Indexation indexation.o wavFile.o wavData.o wavHeader.o histogramSound.o utility.o openPicture.o picture.o matrix.o histogram.o quantification.o histogramText.o parser.o descriptor.o -lm
 
 Compare: utility.o compare.o
 	gcc -o Compare utility.o compare.o
@@ -26,6 +26,9 @@ wavData.o: Sources/Sound/wavData.c Sources/Sound/wavData.h
 
 wavFile.o: Sources/Sound/wavFile.c Sources/Sound/wavFile.h
 	gcc -c Sources/Sound/wavFile.c
+	
+histogramSound.o: Sources/Sound/histogramSound.c Sources/Sound/histogramSound.h
+	gcc -c Sources/Sound/histogramSound.c
 
 # Picture
 
@@ -56,9 +59,6 @@ descriptor.o: Sources/Text/descriptor.c Sources/Text/descriptor.h
 	gcc -c Sources/Text/descriptor.c
 
 # Utility
-
-dynamicIntegerTab.o: Sources/Utility/dynamicIntegerTab.c Sources/Sound/Utility/dynamicIntegerTab.h
-	gcc -c Sources/Utility/dynamicIntegerTab.c
 	
 utility.o: Sources/Utility/utility.c Sources/Sound/Utility/utility.h
 	gcc -c Sources/Utility/utility.c

@@ -12,7 +12,7 @@
 
 /**
  * \struct WavHeader
- * \brief Contient les champ d'une entête d'un fichier wav.
+ * \brief Contient les champs d'une entête d'un fichier wav.
  * \see https://ccrma.stanford.edu/courses/422/projects/WaveFormat/
  *
  * Permet de stocker l'entête d'un fichier wav

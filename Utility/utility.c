@@ -80,7 +80,7 @@ void splitHeaderJustSize(char *header, int *nbColumns, int *nbLines) {
 
 /**
  * \fn void splitHeader(char *header, char *id, int *nbColumns, int *nbLines, char *date)
- * \brief Permet d'extraire toutes les composante d'un header audio
+ * \brief Permet d'extraire toutes les composantes d'un header audio
  *
  * \param header Le header d'un descripteur.
  * \param id L'ID du descripteur.
@@ -92,7 +92,7 @@ void splitHeaderJustSize(char *header, int *nbColumns, int *nbLines) {
 void splitHeader(char *header, char *id, int *nbColumns, int *nbLines, char *type, char *date) {
 	char buffer[5][BUFFER_SIZE] = {0};
 	sscanf(header, "%s\t%d\t%d\t%s\t%s%s%s%s%s", id, nbColumns, nbLines, type, buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
-	sprintf(date, "%s %s %s %s %s %s\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
+	sprintf(date, "%s %s %s %s %s\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
 }
 
 /**
@@ -110,9 +110,9 @@ void formatDate(char *dateIn, char *dateOut) {
 
 /**
  * \fn void extractName(char *fullName, char *nameOnly)
- * \brief Retourne la cellule correspondant a la clef.
+ * \brief Permet d'extraire le nom du fichier seul.
  *
- * \param fullNameLe Le chemin complet du fichier.
+ * \param fullName Le chemin complet du fichier.
  * \param nameOnly Le nom brut.
  */
 void extractName(char *fullName, char *nameOnly) {
@@ -312,6 +312,7 @@ void checkDescriptorBase(FILE *base, FILE *log, char *baseType) {
 			fprintf(log, "CHECK DATABASE : %s \t DELETED OF BASE ! \n", currentFileName);
 			sprintf(buffer, "%s\t%s\n", currentFileName, currentId);
 			supprDescriptorHeader(base, buffer, baseType);
+			// TODO : !
 			supprDescriptor(currentId, baseType); 
 			continue;
 		}
@@ -349,8 +350,8 @@ int getIdInDescriptorBase(FILE *base, char *id, char *fileName) {
 }
 
 /**
- * \fn int getNameAndValue(char *word, char *name, int *value)
- * \brief Permet de récuperer le nom et sa valeur associer.
+ * \fn int getKeyAndValue(char *line, char *key, int *value) 
+ * \brief Permet de récuperer le nom et sa valeur associée.
  * 
  * \param line Ligne du fichier de configuration.
  * \param name Nom de la clef.

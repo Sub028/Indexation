@@ -12,6 +12,7 @@
 #include "wavHeader.h"
 #include "wavData.h"
 #include "Utility/utility.h"
+#include "histogramSound.h"
 
 /**
  * \struct WavFile
